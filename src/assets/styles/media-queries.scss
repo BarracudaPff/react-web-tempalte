@@ -1,0 +1,177 @@
+@import "variables";
+
+
+//// media devices
+//@mixin xs {
+//  @media screen and (max-width: #{$screen-xs-max}) {
+//    @content;
+//  }
+//}
+//
+//@mixin sm {
+//  @media screen and (min-width: #{$screen-sm-min}) and (max-width: #{$screen-sm-max}) {
+//    @content;
+//  }
+//}
+//
+//@mixin md {
+//  @media screen and (min-width: #{$screen-md-min}) and (max-width: #{$screen-md-max}) {
+//    @content;
+//  }
+//}
+//
+//@mixin lg {
+//  @media screen and (min-width: #{$screen-lg-min}) and (max-width: #{$screen-lg-max}) {
+//    @content;
+//  }
+//}
+//
+//@mixin xl {
+//  @media screen and (min-width: #{$screen-xl-min}) and (max-width: #{$screen-xl-max}) {
+//    @content;
+//  }
+//}
+//
+//// media lt queries
+//@mixin lt-sm {
+//  @media screen and (max-width: #{$screen-xs-max}) {
+//    @content;
+//  }
+//}
+//
+//@mixin lt-md {
+//  @media screen and (max-width: #{$screen-sm-max}) {
+//    @content;
+//  }
+//}
+//
+//@mixin lt-lg {
+//  @media screen and (max-width: #{$screen-md-max}) {
+//    @content;
+//  }
+//}
+//
+//@mixin lt-xl {
+//  @media screen and (max-width: #{$screen-lg-max}) {
+//    @content;
+//  }
+//}
+//
+//// media gt queries
+//@mixin gt-xs {
+//  @media screen and (min-width: #{$screen-sm-min}) {
+//    @content;
+//  }
+//}
+//
+//@mixin gt-sm {
+//  @media screen and (min-width: #{$screen-md-min}) {
+//    @content;
+//  }
+//}
+//
+//@mixin gt-md {
+//  @media screen and (min-width: #{$screen-lg-min}) {
+//    @content;
+//  }
+//}
+//
+//@mixin gt-lg {
+//  @media screen and (min-width: #{$screen-xl-min}) {
+//    @content;
+//  }
+//}
+
+// From min-to-max = 7
+@mixin smlxg(
+  $styles-mobile: (), // 375px
+  $styles-s: (),      // 576px
+  $styles-m: (),      // 768px
+  $styles-l: (),      // 992px
+  $styles-xl: (),     // 1200px
+  $styles-xxl: (),    // 1600px
+  $styles-wide: (),   // 1920px
+) {
+  @media (max-width: $w-sm) {
+    @each $property, $value in $styles-mobile {
+      #{$property}: $value;
+    }
+  }
+
+  @media (min-width: $w-sm) {
+    @each $property, $value in $styles-s {
+      #{$property}: $value;
+    }
+  }
+
+  @media (min-width: $w-md) {
+    @each $property, $value in $styles-m {
+      #{$property}: $value;
+    }
+  }
+
+  @media (min-width: $w-lg) {
+    @each $property, $value in $styles-l {
+      #{$property}: $value;
+    }
+  }
+
+  @media (min-width: $w-xl) {
+    @each $property, $value in $styles-xl {
+      #{$property}: $value;
+    }
+  }
+
+  @media (min-width: $w-xxl) {
+    @each $property, $value in $styles-xxl {
+      #{$property}: $value;
+    }
+  }
+
+  @media (min-width: $w-wide) {
+    @each $property, $value in $styles-wide {
+      #{$property}: $value;
+    }
+  }
+}
+
+//$w-md
+//$w-lg
+$splitter: $w-md;
+$splitter-max: calc(#{$w-md} - 1px);
+
+.desktop-only {
+  @media (max-width: $splitter-max) {
+    display: none
+  }
+
+  &-i {
+    @media (max-width: $splitter-max) {
+      display: none !important;
+    }
+  }
+}
+
+.mobile-only {
+  @media (min-width: $splitter) {
+    display: none
+  }
+
+  &-i {
+    @media (min-width: $splitter) {
+      display: none !important;
+    }
+  }
+}
+
+@mixin desktop-for {
+  @media (min-width: $splitter) {
+    @content
+  }
+}
+
+@mixin mobile-for {
+  @media (max-width: $splitter) {
+    @content
+  }
+}
