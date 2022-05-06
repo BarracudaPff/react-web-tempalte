@@ -6,27 +6,31 @@ export function later<T>(delay: number): Promise<T> {
     return new Promise(resolve => setTimeout(resolve, delay))
 }
 
-// export function withTimeout<T>(
-//     timeout: number,
-//     callback: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void
-// ): Promise<T> {
-//     return new Promise<T>((resolve, reject) => {
-//         const timer = setTimeout(() => {
-//             reject(new Error(`Promise timed out after ${timeout} ms`))
-//         }, timeout)
-//
-//         callback(
-//             (value) => {
-//                 clearTimeout(timer)
-//                 resolve(value)
-//             },
-//             (error) => {
-//                 clearTimeout(timer)
-//                 reject(error)
-//             }
-//         )
-//     })
-// }
+export function sleep(delay?: number) {
+    return new Promise(resolve => setTimeout(resolve, delay))
+}
+
+export function withTimeout<T>(
+    timeout: number,
+    callback: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void
+): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+        const timer = setTimeout(() => {
+            reject(new Error(`Promise timed out after ${timeout} ms`))
+        }, timeout)
+
+        callback(
+            (value) => {
+                clearTimeout(timer)
+                resolve(value)
+            },
+            (error) => {
+                clearTimeout(timer)
+                reject(error)
+            }
+        )
+    })
+}
 
 export function toFormData(obj: { [key: string]: any }) {
     const formData = new FormData()
