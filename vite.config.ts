@@ -1,13 +1,15 @@
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import react from "@vitejs/plugin-react";
 import ViteFonts from "vite-plugin-fonts";
-import { resolve } from "path";
+import {resolve} from "path";
 
 // https://vitejs.dev/config/
 // noinspection JSUnusedGlobalSymbols
 export default defineConfig({
     plugins: [
-        react(),
+        react({
+            fastRefresh: process.env.NODE_ENV !== "test"
+        }),
         ViteFonts({
             google: {
                 families: []
