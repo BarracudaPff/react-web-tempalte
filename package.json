@@ -36,7 +36,6 @@
     "test": "jest --coverage --watchAll --config=configs/jest.json"
   },
   "devDependencies": {
-    "@types/antd": "^1.0.0",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.7",
     "@types/react": "^17.0.38",
