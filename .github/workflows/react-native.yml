@@ -1,0 +1,44 @@
+name: React Native CI
+
+on:
+  push:
+    branches: [ master, '**' ]
+  pull_request:
+    branches: [ master, '**' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: [17]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Node modules cache
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Use Node ${{ matrix.node }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Install dependencies
+        run: yarn run build
+
+      - name: Run React Native tests
+        run: npm run test
