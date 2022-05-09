@@ -33,7 +33,7 @@
     "serve": "vite preview",
     "lint": "eslint --cache --ext .js,.jsx,.tsx,.ts ./src",
     "lint:quiet": "eslint './src/**/*.{js,ts,tsx}' --quiet",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --coverage --detectOpenHandles --no-cache"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.17.9",
