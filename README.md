@@ -1,6 +1,6 @@
 # React Web Typescript Starter
 
-# With help of ReactJS, Vite, AntD, TypeScript, Redux with typesafe-actions, SCSS and Jest
+With help of ReactJS, Vite, AntD, TypeScript, Redux with typesafe-actions, SCSS and Jest
 
 ## Installation
 1. Clone/download repo
