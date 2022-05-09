@@ -42,7 +42,14 @@
     },
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like `./node_modules/@types`. */
-    "types": ["vite/client"],                           /* Specify type package names to be included without being referenced in a source file. */
+    "types": [                                           /* Specify type package names to be included without being referenced in a source file. */
+      "vite/client",
+      "jest",
+      "node",
+      "@testing-library/jest-dom",
+      "@testing-library/react",
+      "@testing-library/user-event"
+    ],
     // "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */
     "resolveJsonModule": true,
     /* Enable importing .json files */

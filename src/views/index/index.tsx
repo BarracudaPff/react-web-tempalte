@@ -90,6 +90,7 @@ const LandingView: FC = () => {
         <Layout>
             <Header/>
             <Layout.Content className={"page landing"}>
+                <Typography.Text>sample text</Typography.Text>
                 <Button type={"primary"} onClick={() => setAddNewUser(true)}>Add new one</Button>
                 <Input.Search
                     placeholder="input search text"
