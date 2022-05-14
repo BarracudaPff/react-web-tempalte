@@ -1,4 +1,5 @@
 export * from "./adaptive"
+export * from "./strings"
 export * from "./async"
 export * from "./date"
 export * from "./datetime"

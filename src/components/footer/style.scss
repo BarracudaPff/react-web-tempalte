@@ -1,1 +1,98 @@
-@import "src/assets/styles/mixins";
+@import "/src/assets/styles/mixins";
+
+$textColor: #222222;
+
+.ld-ft {
+  min-height: 235px;
+  padding: 25px 60px;
+  background: rgba(34, 34, 34, 0.03);
+
+  .legal-logo {
+    margin-top: 20px;
+  }
+
+  .legal-info {
+    @include mobile-for {
+      display: block;
+      flex: 0 0 100%;
+      max-width: 100%;
+      gap: 30px;
+    }
+
+    &-wrapper {
+      @extend .legal-info;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    &-nav {
+      @extend .legal-info;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+  }
+
+
+  .legal-cell {
+    margin-bottom: 0;
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #222222;
+    opacity: 0.3;
+  }
+
+  .f-catalog {
+    height: 100%;
+    //flex-wrap: wrap
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-left: 0;
+    gap: 16px;
+
+    &__item {
+      align-self: baseline;
+      display: list-item;
+    }
+
+    ul {
+      padding-left: 0;
+    }
+
+    &-title {
+      color: $textColor;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+
+  .f-catalog-links__item {
+    margin-top: 12px
+  }
+
+  .ft-text {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #222222;
+  }
+
+  .ft-reg {
+    color: #377BFF;
+  }
+
+  .ft-auth {
+    color: #377BFF;
+    border: 1px solid #377BFF;
+    padding: 8px 16px;
+  }
+}

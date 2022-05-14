@@ -1,7 +1,7 @@
 {
-  "name": "react-webpack-typescript-starter",
+  "name": "premiertips-front-r",
   "version": "0.1.0",
-  "description": "Starter kit for React, AntD, Vite (with HMR), Sass/Scss and ofc Typescript <3",
+  "description": "Premier tips front app with React, AntD, Vite (with HMR), Sass/Scss and ofc Typescript <3",
   "keywords": [
     "react",
     "ant",
@@ -9,20 +9,19 @@
     "vite",
     "typescript",
     "sass",
-    "hmr",
-    "starter",
-    "boilerplate"
+    "hmr"
   ],
-  "author": "Viktor Persson",
-  "license": "MIT",
+  "author": "Kirill Krylov <mrm.kikll@gmail.com> https://github.com/BarracudaPff",
+  "license": "UNLICENSED",
+  "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BarracudaPff/react-web-tempalte.git"
+    "url": "git+https://github.com/BarracudaPff/premiertips-front-r.git"
   },
   "bugs": {
-    "url": "https://github.com/BarracudaPff/react-web-tempalte/issues"
+    "url": "https://github.com/BarracudaPff/premiertips-front-r/issues"
   },
-  "homepage": "https://github.com/BarracudaPff/react-web-tempalte",
+  "homepage": "https://github.com/BarracudaPff/premiertips-front-r",
   "scripts": {
     "dev": "vite",
     "start": "vite",
@@ -60,13 +59,13 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "^1.51.0",
-    "ts-loader": "^9.2.6",
     "type-fest": "^2.11.2",
     "typescript": "^4.5.4",
     "vite": "^2.9.8",
     "vite-jest": "^0.1.4",
     "vite-plugin-fonts": "^0.4.0",
-    "vite-plugin-imp": "^2.1.8"
+    "vite-plugin-imp": "^2.1.8",
+    "vite-plugin-svgr": "^2.1.0"
   },
   "dependencies": {
     "@barracudapff/async-storage": "git+https://github.com/BarracudaPff/async-storage#4e633d128e18669c25f44ea34fb1fd4e5a6afceb",

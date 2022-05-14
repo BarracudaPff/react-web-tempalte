@@ -140,30 +140,7 @@
 $splitter: $w-md;
 $splitter-max: calc(#{$w-md} - 1px);
 
-.desktop-only {
-  @media (max-width: $splitter-max) {
-    display: none
-  }
-
-  &-i {
-    @media (max-width: $splitter-max) {
-      display: none !important;
-    }
-  }
-}
-
-.mobile-only {
-  @media (min-width: $splitter) {
-    display: none
-  }
-
-  &-i {
-    @media (min-width: $splitter) {
-      display: none !important;
-    }
-  }
-}
-
+//////////////////////////////
 @mixin desktop-for {
   @media (min-width: $splitter) {
     @content
@@ -171,7 +148,7 @@ $splitter-max: calc(#{$w-md} - 1px);
 }
 
 @mixin mobile-for {
-  @media (max-width: $splitter) {
+  @media (max-width: $splitter-max) {
     @content
   }
 }

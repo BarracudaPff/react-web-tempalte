@@ -21,6 +21,78 @@
   min-height: 100px;
 }
 
-.page {
+.foo {
+  width: 100px;
+  height: 100px;
+}
+
+.foo{
+  height: 100px;
+  width: 100px;
+}
+
+$splitter: $w-md;
+$splitter-max: calc(#{$w-md} - 1px);
+
+.desktop-only {
+  @media (max-width: $splitter-max) {
+    display: none
+  }
+
+  &-i {
+    @media (max-width: $splitter-max) {
+      display: none !important;
+    }
+  }
+}
+
+.mobile-only {
+  @media (min-width: $splitter) {
+    display: none
+  }
+
+  &-i {
+    @media (min-width: $splitter) {
+      display: none !important;
+    }
+  }
+}
+
+.mobile-high-only {
+  @media (max-width: calc(#{$w-sm} - 1px)) {
+    display: none
+  }
+}
+
+//div#root {
+//  background-color: #F673AD;
+//}
+
+.ld-page {
   max-width: 1920px;
+  @include smlxg(
+          (padding-left: 20px, padding-right: 20px),
+          (padding-left: 20px, padding-right: 20px),
+          (padding-left: 40px, padding-right: 40px),
+          (padding-left: 75px, padding-right: 75px),
+          (padding-left: 150px, padding-right: 150px),
+          (padding-left: 275px, padding-right: 275px),
+          (padding-left: 375px, padding-right: 375px),
+  );
+
+  &-full {
+    @include smlxg(
+            (margin-left: -20px, margin-right: -20px),
+            (margin-left: -20px, margin-right: -20px),
+            (margin-left: -40px, margin-right: -40px),
+            (margin-left: -75px, margin-right: -75px),
+            (margin-left: -150px, margin-right: -150px),
+            (margin-left: -275px, margin-right: -275px),
+            (margin-left: -375px, margin-right: -375px),
+    );
+  }
+}
+
+.block-w {
+  width: 100%;
 }

@@ -172,7 +172,7 @@ ij_xml_text_wrap = normal
 
 [{*.ats,*.cts,*.mts,*.ts, *.tsx}]
 ij_continuation_indent_size = 4
-ij_visual_guides = 80
+# ij_visual_guides = 80
 ij_typescript_align_imports = false
 ij_typescript_align_multiline_array_initializer_expression = false
 ij_typescript_align_multiline_binary_operation = false
