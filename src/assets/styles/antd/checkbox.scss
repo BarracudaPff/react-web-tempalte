@@ -1,0 +1,42 @@
+.ant-checkbox {
+  top: 0;
+
+  + span {
+    padding-inline: 14px;
+  }
+}
+
+.ant-checkbox-wrapper {
+  //height: 24px;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7D8592;
+
+  align-items: center;
+}
+
+.ant-checkbox-inner {
+  width: 24px;
+  height: 24px;
+  background-color: white;
+  border-radius: 4px;
+
+  &::after {
+    top: 46%;
+    width: 8px;
+    height: 14px;
+  }
+}
+
+.ant-checkbox-checked::after {
+  border-radius: 4px;
+
+  .ant-checkbox-inner::after {
+    &::after {
+      border: 2px solid #3F8CFF;
+    }
+  }
+}
