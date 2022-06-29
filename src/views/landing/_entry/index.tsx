@@ -7,7 +7,7 @@ import Footer from "src/components/footer"
 
 const LandingEntry: FC = () => {
     return (
-        <Layout>
+        <Layout className={"ld"}>
             <Header/>
             <Layout.Content className={"ld-page ld-entry"}>
                 <Outlet/>

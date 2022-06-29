@@ -1,14 +1,12 @@
 import AsyncStorage from "@barracudapff/async-storage";
+import {AuthToken, User} from "src/models/application"
 
 const prefix = "@pt"
 
-const keys = {
-}
-
-export interface AuthToken {
-    expireIn: Date
-    token: string
-    type: string
+const LOCAL_STORAGE = {
+    AUTH: "@AUTH",
+    USER: "@USER",
+    LOGIN_NAME: "@LOGIN_NAME",
 }
 
 function getArray(key: string): Promise<any[]> {
@@ -48,8 +46,6 @@ function removeFromArrayByIndex(key: string, index: number) {
 class StorageService {
     // userData?: UserNarrowFull
 
-    static INSTANCE = new StorageService()
-
     // storeNewAuthCredential(data: Object): Promise<void> {
     //     return addToArray(keys.AUTH, data)
     // }
@@ -63,18 +59,30 @@ class StorageService {
     // }
     //
 
-    // // Auth data
-    // getAuthToken(): Promise<AuthToken | null> {
-    //     return StorageService.getObject(keys.AUTH)
-    // }
-    //
-    // setAuthToken(token: AuthToken): Promise<void> {
-    //     return StorageService.setObject(keys.AUTH, token)
-    // }
-    //
-    // removeAuthToken(): Promise<void> {
-    //     return StorageService.setObject(keys.AUTH, null)
-    // }
+    // Auth data
+    static getAuthToken(): Promise<AuthToken | null> {
+        return StorageService.getObject(LOCAL_STORAGE.AUTH)
+    }
+
+    static setAuthToken(token: AuthToken): Promise<void> {
+        return StorageService.setObject(LOCAL_STORAGE.AUTH, token)
+    }
+
+    static removeAuthToken(): Promise<void> {
+        return StorageService.setObject(LOCAL_STORAGE.AUTH, null)
+    }
+
+    static getLocalUser(): Promise<User | null> {
+        return StorageService.getObject(LOCAL_STORAGE.USER)
+    }
+
+    static setLocalUser(user: User): Promise<void> {
+        return StorageService.setObject(LOCAL_STORAGE.USER, user)
+    }
+
+    static removeLocalUser(): Promise<void> {
+        return StorageService.setObject(LOCAL_STORAGE.USER, null)
+    }
 
     // User info
     // getUserInfo(): Promise<UserNarrowFull | null> {
@@ -125,7 +133,6 @@ class StorageService {
                 }
             })
     }
-
 
     //
     // removeAuthCredentials(cred: Object): Promise<void> {
@@ -178,4 +185,4 @@ class StorageService {
     // }
 }
 
-export {StorageService, keys};
+export {StorageService, LOCAL_STORAGE};

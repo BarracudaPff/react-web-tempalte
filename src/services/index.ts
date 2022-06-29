@@ -1,12 +1,18 @@
 import Config from "../config"
-
-export {default as ApiService} from "./api"
-
 import {ResponseI} from "src/models/domain"
 import {ResponseStatus} from "src/models/types/base"
 import {CustomError} from "ts-custom-error"
 import {Mappable} from "src/models/types/mapping"
 import {Response as ResponseApp, ResponseArr as ResponseArrApp} from "src/models/application"
+import {notification} from "antd"
+
+export {default as ApiService} from "./api"
+
+function showError(title: string = "", message: string) {
+    notification.error({
+        message: title + "<br/>" + message
+    })
+}
 
 export class DomainError extends CustomError {
     response: ResponseI<unknown>
@@ -35,7 +41,6 @@ export class DomainError extends CustomError {
     }
 
     static parse(err: any, header?: string, body?: string): { [key: string]: string } | void {
-        // console.debug("Parsing error", err)
         if (err instanceof DomainError) {
             if (err.response.errors) {
                 const data = Object.fromEntries(
@@ -44,17 +49,27 @@ export class DomainError extends CustomError {
                 console.debug("Error obj", err)
                 return data
             } else if (err.response.message) {
-                // showError(header ?? "Что-то пошло не так", err.response.message)
+                showError(header ?? "Что-то пошло не так", err.response.message)
             } else {
                 console.error(err)
-                // showError(header ?? "Что-то пошло не так", body ?? err.toString())
+                showError(header ?? "Что-то пошло не так", body ?? err.toString())
             }
         } else if (err instanceof SyntaxError) {
             console.error("JSON parsing error", err)
         } else {
             console.error("Unsupported error", err)
-            // showError(header ?? "Что-то пошло не так", body ?? err.toString())
+            showError(header ?? "Что-то пошло не так", body ?? err.toString())
+        }
+    }
 
+    static notifyError(err: any, title: string = "") {
+        if (err instanceof DomainError) {
+            const msg = this.msgFull(err.response)
+            console.error(msg)
+            showError(title, err.response.message ?? "")
+        } else {
+            console.error(err)
+            showError(title, "Что-то пошло не так")
         }
     }
 
@@ -99,6 +114,16 @@ export function parseRequest<D, A>(req: Promise<Response>, cls: Mappable<D, A>):
     return req.then(data => data.json() as Promise<ResponseI<D>>)
         .then(checkErrors)
         .then(mapToApplication(cls))
+        .catch(err => {
+            console.error("Server request failed", err.toString())
+            throw err
+        })
+}
+
+export function parseRequestNull(req: Promise<Response>): Promise<null | undefined> {
+    return req.then(data => data.json() as Promise<ResponseI<null | undefined>>)
+        .then(checkErrors)
+        .then(res => res.data)
         .catch(err => {
             console.error("Server request failed", err.toString())
             throw err

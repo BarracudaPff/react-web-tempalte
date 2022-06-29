@@ -48,10 +48,10 @@ const Header: FC = () => {
                         <li><Link onClick={collapse} to={"#contacts"} className={"ld-h-text"}>
                             Контакты
                         </Link></li>
-                        <li><Link to={"auth/signup"} className={"ld-h-text menu-auth-content"}>
+                        <li><Link onClick={collapse} to={"/auth/signup"} className={"ld-h-text menu-auth-content"}>
                             Регистрация
                         </Link></li>
-                        <li><Link to={"auth/signin"} className={"ld-h-text menu-auth-content"}>
+                        <li><Link onClick={collapse} to={"/auth/signin"} className={"ld-h-text menu-auth-content"}>
                             Вход
                         </Link></li>
                         {/*<li className={"ld-h-text menu-auth-content"}>Личный кабинет</li>*/}
@@ -67,22 +67,22 @@ const Header: FC = () => {
                     <Col span={10} style={{ backgroundColor: "white" }}/>
                 </Row>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]} items={[
-                    { key: "1", label: <Logo/>, className: "hide-indicator" },
-                    { key: "2", label: <Link to={"#main"}>ГЛАВНАЯ</Link> },
-                    { key: "3", label: <Link to={"#us"}>КТО МЫ?</Link> },
-                    { key: "4", label: <Link to={"#product"}>ПРОДУКТ</Link> },
-                    { key: "5", label: <Link to={"#contacts"}>КОНТАКТЫ</Link> },
+                    { key: "1", label: <Link to={"/landing#main"}><Logo/></Link>, className: "hide-indicator" },
+                    { key: "2", label: <Link to={"/landing#main"}>ГЛАВНАЯ</Link> },
+                    { key: "3", label: <Link to={"/landing#us"}>КТО МЫ?</Link> },
+                    { key: "4", label: <Link to={"/landing#product"}>ПРОДУКТ</Link> },
+                    { key: "5", label: <Link to={"/landing#contacts"}>КОНТАКТЫ</Link> },
 
                     {
                         key: "6", style: { marginLeft: "auto" }, label: (
-                            <Link to={"auth/signup"}>
+                            <Link to={"/auth/signup"}>
                                 <Typography.Text className={"menu-auth-content"}>Регистрация</Typography.Text>
                             </Link>
                         )
                     },
                     {
                         key: "7", label: (
-                            <Link to={"auth/signin"}>
+                            <Link to={"/auth/signin"}>
                                 <Typography.Text className={"menu-auth-content-b"}>Войти</Typography.Text>
                             </Link>
                         )

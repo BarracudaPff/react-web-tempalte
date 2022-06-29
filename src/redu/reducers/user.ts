@@ -1,24 +1,38 @@
-import {addUser, loadUsers} from "src/redu/actions/user"
-import {createReducer} from "typesafe-actions"
-import {UserInfo} from "src/models/application"
+import * as userAct from "src/redu/actions/user"
+import {createReducer, ActionType} from "typesafe-actions"
+import {User} from "src/models/application"
+import {logIn, logOut} from "src/redu/actions/user"
+import {StorageService} from "src/services/StorageService"
 
 export interface UserState {
-    // isLogin: boolean;
-    // userInfo?: UserInfo;
-    users: UserInfo[]
+    isLogin: boolean;
+    user?: User;
 }
 
-export type UserActionType = ReturnType<typeof loadUsers | typeof addUser>
+export type UserActionType = ActionType<typeof userAct>
 
-const auth = createReducer<UserState, UserActionType>({
-    // isLogin: false,
-    // userInfo: Config.mockForms ? {} : undefined
-    users: []
-})
-    .handleAction(addUser, (state, { payload }) => ({
-        ...state,
-        users: [...state.users, payload]
+let localUser: User | undefined
+
+try {
+    const user = await StorageService.getLocalUser()
+    const token = await StorageService.getAuthToken()
+    if (user && token) localUser = user
+} catch (e) {
+}
+
+const initialState = {
+    isLogin: !!localUser,
+    user: localUser,
+}
+
+const user = createReducer<UserState, UserActionType>(initialState)
+    .handleAction(logIn, (state, { payload }) => ({
+        isLogin: true,
+        user: payload
     }))
-    .handleAction(loadUsers, (state, { payload }) => ({ users: payload }))
+    .handleAction(logOut, () => ({
+        isLogin: false,
+        userMe: undefined
+    }))
 
-export default auth
+export default user

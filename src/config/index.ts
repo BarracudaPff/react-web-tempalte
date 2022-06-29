@@ -22,5 +22,6 @@ export default {
         testModeToken: VITE_API_HTTP_TEST_TOKEN,
         apiURL: VITE_API_HTTP_BASE,
         imgURL: VITE_API_IMG_HTTP_BASE ?? VITE_API_HTTP_BASE,
-    }
+    },
+    debugPhoneCode: IS_DEV ? "1111" : undefined
 };

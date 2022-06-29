@@ -22,7 +22,7 @@ export interface Mappable2<Domain, Application> {
  */
 export type Patch<T, Config extends { [key: string]: keyof T } = {}> =
     Pick<T, Exclude<keyof T, Config[keyof Config]>>
-    & { [Key in keyof Config]: T[Config[Key]] } & { to?: () => T }
+    & { [Key in keyof Config]: T[Config[Key]] }
 /**
  * Same as {@link Patch}, but also able to hard override prop's type (for ex, in case of nesting)
  *
@@ -32,11 +32,10 @@ export type Patch<T, Config extends { [key: string]: keyof T } = {}> =
 export type PatchHard<T,
     Config extends { [key: string]: keyof T },
     Hard extends { [Key in keyof Patch<T, Config>]?: any }> = //Partial<Patch<T, Config>[Key]> }> =
-    Omit<Patch<T, Config>, keyof Hard>
-    & Hard
+    Omit<Patch<T, Config>, keyof Hard> & Hard
 
 
-// export type ToPatch<T> = { to?: () => T }
+export type ToDomain<T extends object> = { toDomain: () => T }
 
 // function map<Domain, Application>(obj: Mappable<Domain, Application>, data: Domain, ...other: Mappable<Domain, Application>): Application {
 //     return new obj(data, other)

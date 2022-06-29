@@ -1,4 +1,4 @@
-@import "src/assets/styles/mixins";
+@import "/src/assets/styles/mixins";
 
 .ld-h,
 .ld-h-dr {
@@ -37,28 +37,22 @@
     li, .ld-h-text {
       border: none;
     }
-
-    .menu-auth-content {
-      font-family: 'Montserrat';
-      font-style: normal;
-      font-weight: 600;
-      font-size: 14px;
-      line-height: 20px;
-      text-transform: uppercase;
-      color: #377BFF;
-
-      &-b {
-        @extend .menu-auth-content;
-
-        padding: 8px 16px;
-        border: 1px solid #377BFF;
-      }
-    }
   }
-}
 
-.ld-h {
-  @include mobile-for {
-    background-color: black;
+  .menu-auth-content {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+    color: #377BFF;
+
+    &-b {
+      @extend .menu-auth-content;
+
+      padding: 8px 16px;
+      border: 1px solid #377BFF;
+    }
   }
 }

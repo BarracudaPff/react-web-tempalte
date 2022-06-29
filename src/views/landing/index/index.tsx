@@ -314,8 +314,8 @@ const LandingView: FC = () => {
                                 оставить
                                 чаевые в Вашем заведении.
                             </Typography.Text>
-                            <Form layout={"inline"} className={"ant-col-14 promo-form"}>
-                                <Form.Item style={{ flex: 1 }}>
+                            <Form layout={"inline"} className={"ant-col-24 promo-form"}>
+                                <Form.Item>
                                     <Input placeholder={"Почта или номер телефона"} className={"ld-input-promo"}/>
                                 </Form.Item>
                                 <Button type={"primary"} htmlType={"submit"} className={"ld-but-primary"}>Подключиться</Button>

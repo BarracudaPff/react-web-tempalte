@@ -48,7 +48,8 @@
       "node",
       "@testing-library/jest-dom",
       "@testing-library/react",
-      "@testing-library/user-event"
+      "@testing-library/user-event",
+      "./node_modules/user-agent-data-types"
     ],
     // "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */
     "resolveJsonModule": true,

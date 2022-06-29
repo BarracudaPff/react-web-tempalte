@@ -1,7 +1,7 @@
 import * as React from "react";
 import {render, screen} from "@testing-library/react";
 import {BrowserRouter as Router} from "react-router-dom";
-import LandingView from "../src/views/index"
+import LandingView from "../src/views/landing/index"
 import {Provider} from "react-redux"
 import store from "../src/redu/store"
 import {sleep} from "../src/utils"

@@ -1,42 +1,48 @@
-import {Email, UserID} from "src/models/types/primitive"
-import {Patch, staticMappable} from "src/models/types/mapping"
-import {UserInfoI} from "src/models/domain"
+import {Email, Password, Phone, UserID} from "src/models/types/primitive"
+import {StaffStatus, UserRank} from "src/models/types/base"
+import {Nullable} from "src/models/types/utility"
+import {Patch, PatchHard, staticMappable} from "src/models/types/mapping"
+import {UserExtendedI, UserI} from "src/models/domain"
+import {PC} from "src/models/config"
+import {RecordAt} from "src/models/application/base"
+import {WaiterInfoExtended} from "src/models/application/waiter"
 
-@staticMappable<UserInfoI, UserInfo>()
-export class UserInfo implements Patch<UserInfoI, {
-    myUsername: "username"
-}> {
+@staticMappable<UserI, User>()
+export class User extends RecordAt implements Patch<UserI, PC.User> {
     id: UserID
-    name: string
-    myUsername: UserInfoI["username"]
-    email: Email
-    address: { street: string; suite: string; city: string; zipcode: string; geo: { lat: string; lng: string } }
-    phone: string
-    website: string
-    company: { name: string; catchPhrase: string; bs: string }
+    email: Nullable<Email>
+    phone: Nullable<Phone>
+    password: Password
+    rank: UserRank
+    isStaff: boolean
+    isFinanceManager: boolean
+    staffStatus: StaffStatus
 
-    constructor(props: UserInfoI) {
-        this.id = props.id
-        this.name = props.name
-        this.myUsername = props.username
-        this.email = props.email
-        this.address = props.address
-        this.phone = props.phone
-        this.website = props.website
-        this.company = props.company
+    constructor(data: UserI) {
+        super(data)
+        this.id = data.id
+        this.email = data.email
+        this.phone = data.phone
+        this.password = data.password
+        this.rank = data.rank
+        this.isStaff = !!data.is_staff
+        this.isFinanceManager = !!data.is_finance_manager
+        this.staffStatus = data.staff_status
     }
 
-    fullName() {
-        return this.name + ", @" + this.myUsername
+    adminInitUri() {
+        return this.rank <= UserRank.WAITER ? '/admin/profile' : '/admin/restaurants'
     }
+}
 
-    fullAddress() {
-        const { street, suite, city, zipcode } = this.address
-        return street + ", " + suite + ", " + city + ", " + zipcode
-    }
+@staticMappable<UserExtendedI, UserExtended>()
+export class UserExtended extends User implements PatchHard<UserExtendedI, PC.UserExtended, {
+    waiterInfo: WaiterInfoExtended
+}> {
+    waiterInfo: WaiterInfoExtended
 
-    fullCompany() {
-        const { name, catchPhrase, bs, } = this.company
-        return name + ", " + catchPhrase + ", " + bs
+    constructor(data: UserExtendedI) {
+        super(data)
+        this.waiterInfo = new WaiterInfoExtended(data.waiter_info)
     }
 }

@@ -1,10 +1,11 @@
-import {UserInfo} from "src/models/application"
-import {ResponseI, UserInfoI} from "src/models/domain"
+import {AuthToken} from "src/models/application"
+import {AuthRequest} from "src/models/domain"
+import {Email, Phone} from "src/models/types/primitive"
 
 export default interface ApiServiceI {
-    listUsers(): Promise<UserInfo[]>
+    loginEmail(req: AuthRequest): Promise<AuthToken>
 
-    getUser(id: number): Promise<UserInfo>
+    logout(): void
 
-    addUser(info: UserInfoI): Promise<UserInfo>
+    sendApplication(phone: Phone, email: Email, company_name: string, additional_information: string): Promise<null | undefined>
 }

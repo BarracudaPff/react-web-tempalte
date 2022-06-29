@@ -1,0 +1,28 @@
+@use "sass:math";
+@import "/src/assets/styles/mixins";
+
+.mt-header {
+  margin-top: 64px;
+  padding-block: 24px;
+}
+
+.auth {
+  height: 100%;
+  min-height: inherit;
+  flex-direction: column;
+  @include flex-center;
+
+  .login-form {
+    margin-inline: auto;
+    max-width: 400px;
+  }
+  .login-form-forgot {
+    float: right;
+  }
+  .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+  .login-form-button {
+    width: 100%;
+  }
+}

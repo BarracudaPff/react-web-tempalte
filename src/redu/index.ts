@@ -6,8 +6,9 @@ export interface AppState {
 }
 
 export enum ReduxType {
-    LOAD_USERS = "LOAD_USERS",
-    ADD_USER = "ADD_USER",
+    // LOAD_USERS = "LOAD_USERS",
+    LOG_IN = "LOG_IN",
+    LOG_OUT = "LOG_OUT",
 }
 
 // noinspection JSUnusedLocalSymbols

@@ -1,11 +1,7 @@
 import {AuthTokenType, ResponseStatus} from "src/models/types/base"
-import {BoolExt, DateExt} from "src/models/types/primitive"
+import {BoolExt, DateExt, TokenID} from "src/models/types/primitive"
 import {Nullable, OmitTS} from "src/models/types/utility"
 import {ApiErrors} from "src/models/types/api"
-
-export interface ResponseIArr<T> extends OmitTS<ResponseI<T>, "data"> {
-    data: T[]
-}
 
 export interface ResponseI<T> {
     status: ResponseStatus,
@@ -14,7 +10,15 @@ export interface ResponseI<T> {
     data: T
 }
 
-export interface AuthTokenResponseI {
+export interface ResponseIArr<T> extends OmitTS<ResponseI<T>, "data"> {
+    data: T[]
+}
+
+export interface AuthSIDTokenI {
+    sid: string
+}
+
+export interface AuthTokenI {
     type: AuthTokenType
     token: string
     expire_in: DateExt

@@ -1,10 +1,11 @@
 import {Mappable, Patch, PatchHard, staticMappable} from "src/models/types/mapping"
-import {AuthTokenResponseI, LinkI, PageRequestI, RecordAtI, ResponseI, ResponseIArr} from "src/models/domain"
+import {AuthSIDTokenI, AuthTokenI, LinkI, PageRequestI, RecordAtI, ResponseI, ResponseIArr} from "src/models/domain"
 import {AuthTokenType, ResponseStatus} from "src/models/types/base"
-import {PatchConf} from "src/models/config"
+import {PC} from "src/models/config"
 import {ensureDate} from "src/utils/datetime"
 import {Nullable} from "src/models/types/utility"
 import {ApiErrors} from "src/models/types/api"
+import Config from "src/config"
 
 @staticMappable<ResponseI<unknown>, Response<unknown, unknown>>()
 export class Response<D, A> implements PatchHard<ResponseI<D>, {}, {
@@ -68,14 +69,24 @@ export class ResponseArr<D, A> implements PatchHard<ResponseIArr<D>, {}, {
 //     }
 // }
 
+@staticMappable<AuthSIDTokenI, AuthSIDToken>()
+export class AuthSIDToken implements Patch<AuthSIDTokenI> {
+    sid: string
+    _debugCode?: string
 
-@staticMappable<AuthTokenResponseI, AuthToken>()
-export class AuthToken implements Patch<AuthTokenResponseI, PatchConf.AuthToken> {
+    constructor(data: AuthSIDTokenI) {
+        this.sid = data.sid
+        this._debugCode = Config.debugPhoneCode
+    }
+}
+
+@staticMappable<AuthTokenI, AuthToken>()
+export class AuthToken implements Patch<AuthTokenI, PC.AuthToken> {
     expireIn: Date
     token: string
     type: AuthTokenType
 
-    constructor(data: AuthTokenResponseI) {
+    constructor(data: AuthTokenI) {
         const expire = new Date()
         expire.setTime(expire.getTime() + (data.expire_in as number * 1000))
 
@@ -86,7 +97,7 @@ export class AuthToken implements Patch<AuthTokenResponseI, PatchConf.AuthToken>
 }
 
 @staticMappable<RecordAtI, RecordAt>()
-export class RecordAt implements PatchHard<RecordAtI, PatchConf.RecordAt, {
+export class RecordAt implements PatchHard<RecordAtI, PC.RecordAt, {
     createdAt?: Date
     updatedAt?: Date
 }> {
@@ -101,7 +112,7 @@ export class RecordAt implements PatchHard<RecordAtI, PatchConf.RecordAt, {
 }
 
 @staticMappable<PageRequestI<unknown>, PageRequest<unknown, unknown>>()
-export class PageRequest<D, A> implements PatchHard<PageRequestI<D>, PatchConf.PageRequest, {
+export class PageRequest<D, A> implements PatchHard<PageRequestI<D>, PC.PageRequest, {
     data: A[]
     to: number
 }> {

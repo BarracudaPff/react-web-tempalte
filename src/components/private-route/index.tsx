@@ -12,11 +12,13 @@ type Props = {
 const PrivateRoute: FC<Props> = ({element: Component, meta = {}, ...rest}) => {
     const {pathname, search} = useLocation()
     const {isLogin} = useSelector(it => it.user)
-    const isLoginPage = pathname === "/" || pathname === "/login"
+    const isLoginPage = pathname === "/" || pathname === "/signin"
 
     console.log({isLogin})
 
     React.useEffect(() => {
+        if (meta.requiresAuth && !isLogin && !isLoginPage) return
+
         if (meta.title) {
             document.title = `${meta.title} - ${config.title}`
         } else {
@@ -32,14 +34,16 @@ const PrivateRoute: FC<Props> = ({element: Component, meta = {}, ...rest}) => {
 
     if (meta.requiresAuth) {
         if (isLogin) {
+            // @ts-ignore
             return <Component {...rest} />
         } else {
             if (!isLoginPage) {
-                return <Navigate to={`/auth/login/?redirectUrl=${pathname}${search}`} replace/>
+                return <Navigate to={`/auth/signin/?redirectUrl=${pathname}${search}`} replace/>
             }
         }
     }
 
+    // @ts-ignore
     return <Component {...rest} />
 }
 

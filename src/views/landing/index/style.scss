@@ -88,7 +88,7 @@
     top: 0;
     left: 0;
     right: 0;
-    transform: translateY(50%);
+    transform: translateY(30%);
     @include mobile-for {
       transform: none;
       top: calc(64px + 64px + 40px);
@@ -363,7 +363,7 @@
   }
 
   .promo-form {
-    margin-inline: auto;
+    justify-content: center;
     width: 100%;
     display: flex;
     padding: 60px;
