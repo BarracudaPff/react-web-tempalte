@@ -23,11 +23,12 @@ const Sider: FunctionComponent<Props> = (props) => {
             theme={"light"}
             style={{
                 overflow: "auto",
-                height: "100vh",
+                // height: "100vh",
                 position: "fixed",
-                left: 0,
-                top: 0,
-                bottom: 0,
+                left: 20,
+                top: 20,
+                bottom: 35,
+                borderRadius: 24
             }}>
             <div className="logo"/>
             <Menu theme="light" mode="inline" defaultSelectedKeys={["4"]} items={items}/>

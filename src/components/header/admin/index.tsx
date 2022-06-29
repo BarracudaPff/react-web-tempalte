@@ -4,7 +4,7 @@ import {useWindowSize} from "src/utils/hooks"
 import Search from "antd/es/input/Search"
 import {GeneralNotifications} from "src/components/icons"
 import {AppstoreOutlined} from "@ant-design/icons"
-import { DownloadOutlined } from '@ant-design/icons';
+import {DownloadOutlined} from "@ant-design/icons";
 
 
 const AdminHeader: FC = () => {
@@ -15,22 +15,22 @@ const AdminHeader: FC = () => {
     const collapse = () => showExpanded(false)
 
     return (
-        <Layout.Header className="site-layout-background" style={{ padding: 0 }}>
+        <Layout.Header className="site-layout-background" style={{ padding: 0, height: 48 }}>
             {/*<Button icon={GeneralNotifications}/>*/}
-            <Row>
-                <Col flex={"auto"}>
-                    <Search placeholder="input search text" enterButton />
+            <Row justify={"space-between"}>
+                <Col span={8}>
+                    <Search placeholder="Search" enterButton/>
                 </Col>
                 <Col>
-                    <Space size={"middle"}>
-                        <Button type="primary" shape="circle" icon={<AppstoreOutlined />} />
-                        <div>
-                            <Avatar size={"small"}/>
-                            <Typography.Text>
+                    {/*<Space size={"middle"}>*/}
+                    {/*    <Button type="primary" shape="circle" icon={<AppstoreOutlined />} />*/}
+                    {/*    <div>*/}
+                    {/*        <Avatar size={"small"}/>*/}
+                    {/*        <Typography.Text>*/}
 
-                            </Typography.Text>
-                        </div>
-                    </Space>
+                    {/*        </Typography.Text>*/}
+                    {/*    </div>*/}
+                    {/*</Space>*/}
                 </Col>
             </Row>
 
@@ -44,7 +44,7 @@ const AdminHeader: FC = () => {
             {/*        /!*    enterButton="Search"*!/*/}
             {/*        /!*    size="large"*!/*/}
             {/*        /!*    onSearch={onSearch}*!/*/}
-                    {/*/>*/}
+            {/*/>*/}
             {/*    </Col>*/}
             {/*    <Col>*/}
             {/*        <Space size={"middle"}>*/}

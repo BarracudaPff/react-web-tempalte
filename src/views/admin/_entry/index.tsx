@@ -11,7 +11,7 @@ const AdminEntry: FC = () => {
             <Sider/>
             <Layout className="site-layout" style={{ marginLeft: 200 }}>
                 <AdminHeader/>
-                <Layout.Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
+                <Layout.Content style={{ overflow: "initial" }}>
                     <Outlet/>
                 </Layout.Content>
             </Layout>

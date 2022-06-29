@@ -42,3 +42,11 @@
     color: #7D8592;
   }
 }
+
+.ant-input-search {
+  .ant-input-group > .ant-input-group-addon:last-child .ant-input-search-button {
+    height: 48px;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+  }
+}
