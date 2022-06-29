@@ -15,11 +15,11 @@ export function toTime(date: number | Date) {
     return `${twoDigits(_date.getHours())}:${twoDigits(_date.getMinutes())}`
 }
 
-export function toPresentableShortDate(date: number | Date, showMonth: boolean = true, showYear: boolean = true) {
+export function toPresentableShortDate(date: number | Date, showMonth: boolean = true, showYear: boolean = true, showDayOfWeek: boolean = true) {
     const _date = ensureDate(date)
 
     const day = _date.getDate()
-    const dayOfWeek = ", " + daysOfWeekShort[_date.getDay()]
+    const dayOfWeek = showDayOfWeek ? ", " + daysOfWeekShort[_date.getDay()] : ""
     const month = showMonth ? " " + monthsTemp[_date.getMonth()] : ""
     const year = showYear ? " " + _date.getFullYear() : ""
 

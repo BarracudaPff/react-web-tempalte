@@ -7,6 +7,9 @@ import {TeamI} from "src/models/domain/team"
 import {WaiterInfoI} from "src/models/domain/waiter"
 import {VerifyStatus} from "src/models/types/base"
 import {Nullable} from "src/models/types/utility"
+import {User} from "src/models/application"
+import {WaiterInfo} from "src/models/application/waiter"
+import {RestaurantFinanceInfo, RestaurantLegalInfo, RestaurantPaymentSettings} from "src/models/application/restaurants"
 
 // type RestaurantExtraField =
 //     "owner"
@@ -25,8 +28,14 @@ export interface RestaurantI extends RecordAtI {
     full_name: string
     verify_status: VerifyStatus
 
-    fee_amount: Nullable<Int>
+    fee_amount: Double
     is_demo: BoolExt
+
+    owner?: UserI
+    finance_info: RestaurantFinanceInfoI
+    legal_info?: RestaurantLegalInfoI
+    base_waiters?: WaiterInfoI[]
+    payment_settings?: RestaurantPaymentSettingsI
     // "id": "integer", //ID ресторана
     // "owner_id": "integer", //ID пользователя (владельца ресторана)
     // "manager_id": "integer", //ID пользователя (менеджера ресторана)
@@ -81,21 +90,6 @@ export interface RestaurantPaymentSettingsI extends RecordAtI {
 
     hide_zero_fee_mark: BoolExt
     save_receipt_amount: BoolExt
-}
-
-export interface RestaurantParticularDataI extends RestaurantI {
-    owner?: UserI
-    manager?: UserI
-    address?: RestaurantAddressI
-    finance_info?: RestaurantFinanceInfoI
-    legal_info?: RestaurantLegalInfoI
-    tips?: TipRecordI[]
-    payouts?: RestaurantPayoutI[]
-    waiters?: WaiterInfoI[]
-
-    base_waiters?: WaiterInfoI[]
-    payment_settings?: RestaurantPaymentSettingsI
-    teams?: TeamI[]
 }
 
 //

@@ -1,8 +1,8 @@
-import {Restaurant} from "src/models/application/restaurants"
+import {Restaurant, RestaurantFinanceInfo, RestaurantLegalInfo, RestaurantPaymentSettings} from "src/models/application/restaurants"
 import {TipRecord} from "src/models/application/tips"
 import {Payout} from "src/models/application/payouts"
-import {BoolExt, RestaurantID, TeamCode, UserID} from "src/models/types/primitive"
-import {Nullable} from "src/models/types/utility"
+import {User} from "src/models/application"
+import {WaiterInfo} from "src/models/application/waiter"
 
 export namespace PCH {
     export type Rec = {
@@ -14,6 +14,14 @@ export namespace PCH {
         restaurant: Restaurant
         tips: TipRecord[]
         payouts: Payout[]
+    }
+
+    export type Rest = {
+        owner?: User
+        legalInfo?: RestaurantLegalInfo
+        financeInfo?: RestaurantFinanceInfo
+        baseWaiters?: WaiterInfo[]
+        paymentSettings?: RestaurantPaymentSettings
     }
 }
 
@@ -64,6 +72,11 @@ export namespace PC {
         managerId: "manager_id"
         fullName: "full_name"
         verifyStatus: "verify_status"
+
+        financeInfo: "finance_info"
+        legalInfo: "finance_info"
+        baseWaiters: "finance_info"
+        paymentSettings: "finance_info"
     }
 
     export type WaiterInfo = {

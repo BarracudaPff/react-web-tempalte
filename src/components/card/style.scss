@@ -1,0 +1,13 @@
+@use "sass:math";
+
+.rest-card {
+  border-radius: 24px;
+
+  .ant-divider-vertical {
+    margin: 0 40px;
+  }
+
+  .r-data-cell {
+    width: calc((100% - (1px + 40px * 2)) / 2);
+  }
+}

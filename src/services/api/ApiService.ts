@@ -2,11 +2,28 @@ import {staticImplements} from "src/models/types/mapping";
 import ApiServiceI from "src/services/api/base"
 import {AuthSIDToken, AuthToken, User} from "src/models/application"
 import {AuthPhoneRequest, AuthPhoneSIDRequest, AuthRequest} from "src/models/domain"
-import {parseRequest, parseRequestNull} from "src/services"
+import {parseRequest, parseRequestArr, parseRequestNull} from "src/services"
 import {API} from "src/services/Endpoints"
 import {BaseApiService} from "src/services/BaseApiService"
 import {Email, Phone} from "src/models/types/primitive"
 import ApiServiceFake from "src/services/api/ApiService.fake"
+import {Restaurant} from "src/models/application/restaurants"
+import {toQueryArr} from "src/utils"
+
+export enum RestField {
+    OWNER = "owner",
+    MANAGER = "manager",
+    ADDRESS = "address",
+    INFO_FINANCE = "finance_info",
+    INFO_LEGAL = "legal_info",
+    TIPS = "tips",
+    PAYOUTS = "payouts",
+    WAITERS = "waiters",
+    WAITERS_BASE = "base_waiters",
+    PAYMENT_SETTINGS = "payment_settings",
+    TEAMS = "teams",
+    COMMENTS = "comments",
+}
 
 @staticImplements<ApiServiceI>()
 export default class {
@@ -37,6 +54,15 @@ export default class {
         // return ApiServiceFake.getMe()
     }
 
-    // static getMe() {
-    // }
+    static createNewRest(full_name: string, fee_amount: number) {
+        return parseRequest(BaseApiService.post(API.RestaurantNew, { full_name, fee_amount }), Restaurant)
+    }
+
+    static listRest(id?: string, fields?: RestField[]) {
+        const params: any = {}
+        if (fields) params.fields = fields?.join(",")
+        if (id) params.restaurant_id = id
+
+        return parseRequestArr(BaseApiService.get(API.RestaurantList, params), Restaurant)
+    }
 }

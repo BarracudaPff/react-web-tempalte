@@ -1,5 +1,4 @@
-import {BoolExt, Double, Int, RestaurantID, UserID} from "src/models/types/primitive"
-import {WaiterInfoI} from "src/models/domain/waiter"
+import {Double, Int, RestaurantID, UserID} from "src/models/types/primitive"
 import {Patch, PatchHard, staticMappable} from "src/models/types/mapping"
 import {
     RestaurantAddressI,
@@ -7,24 +6,31 @@ import {
     RestaurantFinanceInfoI,
     RestaurantI,
     RestaurantLegalInfoI,
-    RestaurantParticularDataI,
     RestaurantPaymentSettingsI
 } from "src/models/domain/restaurants"
-import {PC} from "src/models/config"
+import {PC, PCH} from "src/models/config"
 import {VerifyStatus} from "src/models/types/base"
 import {Nullable} from "src/models/types/utility"
 import {RecordAt} from "src/models/application/base"
 import {ensureDate} from "src/utils"
+import {User} from "src/models/application/user"
+import {WaiterInfo} from "src/models/application/waiter"
 
 @staticMappable<RestaurantI, Restaurant>()
-export class Restaurant extends RecordAt implements Patch<RestaurantI, PC.Restaurant> {
+export class Restaurant extends RecordAt implements PatchHard<RestaurantI, PC.Restaurant, PCH.Rest> {
     id: UserID
     ownerId: UserID
     managerId: UserID
-    feeAmount: Nullable<Int>
+    feeAmount: Double
     fullName: string
     verifyStatus: VerifyStatus
     is_demo: boolean
+
+    owner?: User
+    financeInfo?: RestaurantFinanceInfo
+    legalInfo?: RestaurantLegalInfo
+    baseWaiters?: WaiterInfo[]
+    paymentSettings?: RestaurantPaymentSettings
 
     constructor(data: RestaurantI) {
         super(data)
@@ -35,11 +41,17 @@ export class Restaurant extends RecordAt implements Patch<RestaurantI, PC.Restau
         this.fullName = data.full_name
         this.verifyStatus = data.verify_status
         this.is_demo = !!data.is_demo
+
+        this.owner = data.owner && new User(data.owner)
+        this.financeInfo = data.finance_info && new RestaurantFinanceInfo(data.finance_info)
+        this.legalInfo = data.legal_info && new RestaurantLegalInfo(data.legal_info)
+        this.baseWaiters = data.base_waiters && data.base_waiters.map(it => new WaiterInfo(it))
+        this.paymentSettings = data.payment_settings && new RestaurantPaymentSettings(data.payment_settings)
     }
 }
 
 @staticMappable<RestaurantExpandedI, RestaurantExpanded>()
-export class RestaurantExpanded extends Restaurant implements Patch<RestaurantExpandedI, PC.RestaurantExpanded> {
+export class RestaurantExpanded extends Restaurant implements PatchHard<RestaurantExpandedI, PC.RestaurantExpanded, PCH.Rest> {
     ourFee: Nullable<Double>
 
     constructor(data: RestaurantExpandedI) {
@@ -131,27 +143,6 @@ export class RestaurantPaymentSettings implements Patch<RestaurantPaymentSetting
         this.restaurantId = data.restaurant_id
         this.hideZeroFeeMark = !!data.hide_zero_fee_mark
         this.saveReceiptAmount = !!data.save_receipt_amount
-    }
-}
-
-@staticMappable<RestaurantParticularDataI, RestaurantParticularData>()
-export class RestaurantParticularData extends Restaurant implements PatchHard<RestaurantParticularDataI, PC.RestaurantParticularData, {
-    financeInfo?: RestaurantFinanceInfoI
-    legalInfo?: RestaurantLegalInfoI
-    baseWaiters?: WaiterInfoI[]
-    paymentSettings?: RestaurantPaymentSettingsI
-}> {
-    financeInfo?: RestaurantFinanceInfoI
-    legalInfo?: RestaurantLegalInfoI
-    baseWaiters?: WaiterInfoI[]
-    paymentSettings?: RestaurantPaymentSettingsI
-
-    constructor(data: RestaurantParticularDataI) {
-        super(data)
-        this.financeInfo = data.finance_info
-        this.legalInfo = data.legal_info
-        this.baseWaiters = data.base_waiters
-        this.paymentSettings = data.payment_settings
     }
 }
 
