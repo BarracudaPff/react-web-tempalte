@@ -9,7 +9,11 @@ export class RestService {
         return ApiService.createNewRest(name, percent)
     }
 
-    static list(id?: number) {
+    static listWithFieldsRest(id?: number, fields?: RestField[]) {
+        return ApiService.listRest(id, fields)
+    }
+
+    static listRest(id?: number) {
         return ApiService.listRest(id, [RestField.OWNER, RestField.MANAGER, RestField.WAITERS_BASE])
     }
 
@@ -81,6 +85,6 @@ export class RestService {
     }
 
     static delete(id: RestaurantID) {
-        return ApiService.delete(id)
+        return ApiService.deleteRest(id)
     }
 }

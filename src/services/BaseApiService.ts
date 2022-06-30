@@ -17,7 +17,7 @@ export class BaseApiService {
     }
 
     static postFormData(url: string, body: FormData, params?: UrlParams, headers?: HttpHeaders) {
-        return this.request(url, "post", { "Content-Type": "multipart/form-data;", ...headers }, body, params)
+        return this.request(url, "post", headers, body, params)
     }
 
     private static request(info: RequestInfo, method: HttpMethod, customH?: HttpHeaders, body?: BodyInit, params?: UrlParams) {
@@ -35,7 +35,7 @@ export class BaseApiService {
             method: method,
             keepalive: true,
             headers,
-            body
+            body,
         }))
     }
 

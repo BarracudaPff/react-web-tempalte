@@ -72,6 +72,7 @@
   "dependencies": {
     "@barracudapff/async-storage": "git+https://github.com/BarracudaPff/async-storage#4e633d128e18669c25f44ea34fb1fd4e5a6afceb",
     "antd": "^4.20.2",
+    "antd-img-crop": "^4.2.3",
     "antd-password-input-strength": "^2.0.1",
     "lodash": "^4.17.21",
     "query-string": "^7.1.1",

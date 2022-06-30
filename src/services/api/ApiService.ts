@@ -1,13 +1,14 @@
 import {staticImplements} from "src/models/types/mapping";
 import ApiServiceI from "src/services/api/base"
 import {AuthSIDToken, AuthToken, User} from "src/models/application"
-import {AuthPhoneRequest, AuthPhoneSIDRequest, AuthRequest, AuthTokenI, UserI} from "src/models/domain"
+import {AuthPhoneRequest, AuthPhoneSIDRequest, AuthRequest, AuthTokenI, NewWaiterRequest, UserI} from "src/models/domain"
 import {parseRequest, parseRequestArr, parseRequestNull, simpleRequest} from "src/services"
 import {API} from "src/services/Endpoints"
 import {BaseApiService} from "src/services/BaseApiService"
-import {Email, Phone, RestaurantID} from "src/models/types/primitive"
+import {Email, Phone, RestaurantID, UserID} from "src/models/types/primitive"
 import {Restaurant, RestaurantAddress, RestaurantFinanceInfo, RestaurantLegalInfo} from "src/models/application/restaurants"
 import {RestaurantPayout} from "src/models/application/payouts"
+import {convertModelToFormData, toFormData} from "src/utils"
 
 export enum RestField {
     OWNER = "owner",
@@ -23,6 +24,14 @@ export enum RestField {
     TEAMS = "teams",
     COMMENTS = "comments",
 }
+
+export enum UserField {
+    WAITER_INFO = "waiter_info",
+    TIPS = "tips",
+    PAYOUTS = "payouts",
+    COMMENTS = "comments",
+}
+
 
 @staticImplements<ApiServiceI>()
 export default class {
@@ -114,7 +123,7 @@ export default class {
     }
 
     static updateFinanceInfoRest(id: RestaurantID, data: { bik: string, accountNumber: string, useCard: boolean }) {
-        console.log({data})
+        console.log({ data })
         return parseRequest(BaseApiService.post(API.RestaurantUpdateFinanceInfo, {
             id: id,
             restaurant_id: id,
@@ -188,13 +197,48 @@ export default class {
 
     static listRest(id?: RestaurantID, fields?: RestField[]) {
         const params: any = {}
-        if (fields) params.fields = fields?.join(",")
+        if (fields?.length) params.fields = fields?.join(",")
         if (id) params.restaurant_id = id
 
         return parseRequestArr(BaseApiService.get(API.RestaurantList, params), Restaurant)
     }
 
-    static delete(id: RestaurantID) {
+    static deleteRest(id: RestaurantID) {
         return parseRequestNull(BaseApiService.post(API.RestaurantDelete, { restaurant_id: id }))
+    }
+
+    static listUsers(restId?: RestaurantID, userId?: UserID, fields?: UserField[]) {
+        const params: any = {}
+        if (fields?.length) params.fields = fields?.join(",")
+        if (restId) params.restaurant_id = restId
+        if (userId) params.waiter_id = userId
+        params.restaurant_id = 3
+
+        return parseRequestArr(BaseApiService.get(API.WaitersList, params), User)
+    }
+
+    static longReq(timeout: number = 2000) {
+        return new Promise(resolve => setTimeout(() => resolve(null), timeout))
+    }
+
+    static createNewUser(data: NewWaiterRequest) {
+        if (!data.customFeeUse) data.customFee = 0
+
+        return parseRequest(BaseApiService.postFormData(API.WaitersNew, convertModelToFormData({
+            restaurant_id: data.restaurantId,
+            team_id: data.teamId,
+            avatar: data.avatar,
+            first_name: data.firstName,
+            last_name: data.lastName,
+            email: data.email != "" ? data.email : undefined,
+            password: data.password != "" ? data.password : undefined,
+            phone: data.phone,
+            custom_fee: data.customFee,
+            custom_fee_use: data.customFeeUse,
+            goal: data.goal,
+            crop_x: data.cropX,
+            crop_y: data.cropY,
+            crop_s: data.cropS,
+        })), User)
     }
 }

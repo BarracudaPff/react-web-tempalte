@@ -42,6 +42,42 @@ export function toFormData(obj: { [key: string]: any }) {
     return formData
 }
 
+export function convertModelToFormData(model: any, form?: FormData, namespace = ''): FormData {
+    let formData = form || new FormData();
+    if (model instanceof File || typeof model === "string") {
+        formData.append(namespace, model)
+        return formData
+    }
+    if (typeof model === "number") {
+        formData.append(namespace, "" + model)
+        return formData
+    }
+    if (typeof model === "boolean") {
+        formData.append(namespace, model ? "1" : "0")
+        return formData
+    }
+
+    for (let propertyName in model) {
+        if (!model.hasOwnProperty(propertyName) || (!model[propertyName] && model[propertyName] != 0)) continue;
+        let formKey = namespace ? `${namespace}[${propertyName}]` : propertyName;
+        if (model[propertyName] instanceof Date)
+            formData.append(formKey, model[propertyName].toISOString());
+        else if (model[propertyName] instanceof Array) {
+            model[propertyName].forEach((element: any, index: any) => {
+                const tempFormKey = `${formKey}[${index}]`;
+                convertModelToFormData(element, formData, tempFormKey);
+            });
+        } else if (typeof model[propertyName] === 'object' && !(model[propertyName] instanceof File))
+            convertModelToFormData(model[propertyName], formData, formKey);
+        else if (model[propertyName] instanceof File) {
+            formData.append(formKey, (model[propertyName] as File));
+        } else {
+            formData.append(formKey, model[propertyName].toString());
+        }
+    }
+    return formData;
+}
+
 
 // export function withMinimalExecTime<T>(
 //     timeout: number,

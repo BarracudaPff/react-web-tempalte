@@ -4,6 +4,7 @@ import user, {UserActionType} from "./reducers/user";
 import rest, {RestActionType} from "./reducers/rest";
 import {Dispatch} from "react"
 import {TypedUseSelectorHook, useDispatch as useDispatchRedux, useSelector as useSelectorRedux} from "react-redux"
+import waiters, {WaiterActionType} from "src/redu/reducers/waiters"
 
 
 /**
@@ -11,7 +12,8 @@ import {TypedUseSelectorHook, useDispatch as useDispatchRedux, useSelector as us
  */
 const rootReducer = combineReducers<AppState>({
     user: user,
-    rest: rest
+    rest: rest,
+    waiters: waiters,
     // goods: goods,
     // user: user
 });
@@ -29,7 +31,7 @@ const store = createStore(rootReducer,
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 // export type AppDispatch = typeof store.dispatch
-export type AppDispatch = UserActionType | RestActionType
+export type AppDispatch = UserActionType | RestActionType | WaiterActionType
 
 
 export const useDispatch: () => Dispatch<AppDispatch> = useDispatchRedux

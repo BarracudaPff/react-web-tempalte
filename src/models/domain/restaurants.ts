@@ -10,6 +10,7 @@ import {Nullable} from "src/models/types/utility"
 import {User} from "src/models/application"
 import {WaiterInfo} from "src/models/application/waiter"
 import {RestaurantFinanceInfo, RestaurantLegalInfo, RestaurantPaymentSettings} from "src/models/application/restaurants"
+import {Team} from "src/models/application/team"
 
 // type RestaurantExtraField =
 //     "owner"
@@ -38,6 +39,8 @@ export interface RestaurantI extends RecordAtI {
     legal_info?: RestaurantLegalInfoI
     base_waiters?: WaiterInfoI[]
     payment_settings?: RestaurantPaymentSettingsI
+
+    teams?: TeamI[]
     // "id": "integer", //ID ресторана
     // "owner_id": "integer", //ID пользователя (владельца ресторана)
     // "manager_id": "integer", //ID пользователя (менеджера ресторана)

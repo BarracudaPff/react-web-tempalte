@@ -11,6 +11,7 @@ import AdminEntry from "src/views/admin/_entry"
 import {NavToAdmin} from "src/components/nav"
 import AdminRestaurantsView from "src/views/admin/restaurants"
 import AdminProfileView from "src/views/admin/profile"
+import EmployeesRestaurantsView from "src/views/admin/employees"
 
 // const LandingView = React.lazy(() => import("src/views/landing"))
 
@@ -66,6 +67,12 @@ export function MainRoutes() {
                     path: "restaurants", element: <PrivateRoute element={AdminRestaurantsView} meta={{
                         requiresAuth: true,
                         title: "Рестораны"
+                    }}/>,
+                },
+                {
+                    path: "employees", element: <PrivateRoute element={EmployeesRestaurantsView} meta={{
+                        requiresAuth: true,
+                        title: "Сотрудники"
                     }}/>,
                 },
                 {

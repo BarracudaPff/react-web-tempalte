@@ -1,22 +1,24 @@
 import React, {FunctionComponent} from "react";
 import {Layout, Menu, MenuProps} from "antd"
 import {AppstoreOutlined} from "@ant-design/icons"
+import {useNavigate} from "react-router-dom"
 
 const items: MenuProps["items"] = [
-    { key: "restaurants", icon: <AppstoreOutlined/>, label: "Заведения" },
-    { key: "employees", icon: <AppstoreOutlined/>, label: "Сотрудники" },
-    { key: "teams", icon: <AppstoreOutlined/>, label: "Команды" },
-    { key: "customisation", icon: <AppstoreOutlined/>, label: "Кастомизация" },
-    { key: "profile", icon: <AppstoreOutlined/>, label: "Профиль" },
-    { key: "instruction", icon: <AppstoreOutlined/>, label: "Инструкция" },
-    { key: "help", icon: <AppstoreOutlined/>, label: "Помогите 🙏" },
-    { key: "logout", icon: <AppstoreOutlined/>, label: "Выйти" },
+    { key: "/admin/restaurants", icon: <AppstoreOutlined/>, label: "Заведения" },
+    { key: "/admin/employees", icon: <AppstoreOutlined/>, label: "Сотрудники" },
+    { key: "/admin/teams", icon: <AppstoreOutlined/>, label: "Команды" },
+    { key: "/admin/customisation", icon: <AppstoreOutlined/>, label: "Кастомизация" },
+    { key: "/admin/profile", icon: <AppstoreOutlined/>, label: "Профиль" },
+    { key: "/admin/instruction", icon: <AppstoreOutlined/>, label: "Инструкция" },
+    { key: "/admin/help", icon: <AppstoreOutlined/>, label: "Помогите 🙏" },
+    { key: "/admin/logout", icon: <AppstoreOutlined/>, label: "Выйти" },
 ]
 
 interface Props {
 }
 
 const Sider: FunctionComponent<Props> = (props) => {
+    const navigate = useNavigate();
 
     return (
         <Layout.Sider
@@ -31,7 +33,7 @@ const Sider: FunctionComponent<Props> = (props) => {
                 borderRadius: 24
             }}>
             <div className="logo"/>
-            <Menu theme="light" mode="inline" defaultSelectedKeys={["4"]} items={items}/>
+            <Menu theme="light" mode="inline" onClick={({ key }) => navigate(key)} items={items}/>
         </Layout.Sider>
     );
 };

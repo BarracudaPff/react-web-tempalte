@@ -82,7 +82,7 @@ const AdminRestaurantsView: FunctionComponent<Props> = (props) => {
     const toggleEditModal = () => setShowEditModal(it => !it)
 
     useEffect(() => {
-        RestService.list().then(rests => {
+        RestService.listRest().then(rests => {
             dispatch(addAllRest(rests))
         }).catch(e => notification.error({ message: "Не получилось получить список ресторанов" }, e))
     }, [])
@@ -181,9 +181,7 @@ const AdminRestaurantsView: FunctionComponent<Props> = (props) => {
                 }).catch(e => notification.error({ message: "Не получилось изменить ресторан" }, e))
                 break;
             case "payback":
-                break;
             case "card":
-                break;
             case "phone":
                 break;
             case "manager":
@@ -197,15 +195,6 @@ const AdminRestaurantsView: FunctionComponent<Props> = (props) => {
                 }).catch(e => notification.error({ message: `Не получилось ${isNewManager ? "добавить" : "изменить"} менеджера` }, e))
                 break;
         }
-        // const data = form.getFieldsValue()
-        // RestService.createNewRest(data.name, data.percent).then(rest => {
-        //     notification.success({ message: "Ресторан создан!" })
-        //     dispatch(addRest(rest))
-        //     console.log(rest)
-        // }).catch(err => {
-        //     notification.error({ message: "Не получилось создать ресторан" })
-        //     console.log(err)
-        // })
     }
 
     return (

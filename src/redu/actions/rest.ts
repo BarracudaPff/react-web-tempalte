@@ -7,6 +7,7 @@ import {User} from "src/models/application"
 export const addAllRest = createAction(ReduxType.LIST_REST)<Restaurant[]>()
 export const addRest = createAction(ReduxType.ADD_REST)<Restaurant>()
 export const updRest = createAction(ReduxType.UPD_REST)<Restaurant>()
+export const deleteRest = createAction(ReduxType.DELETE_REST)<RestaurantID>()
 
 export const modifyBasicRest = createAction(ReduxType.MODIFY_BASIC_REST)<Restaurant>()
 export const modifyAddressRest = createAction(ReduxType.MODIFY_ADDRESS_REST)<{id: RestaurantID, address: RestaurantAddress}>()
@@ -18,4 +19,3 @@ export const addManagerRest = createAction(ReduxType.ADD_MANAGER_REST)<{id: Rest
 export const updManagerRest = createAction(ReduxType.UPD_MANAGER_REST)<{id: RestaurantID, manager: User}>()
 export const deleteManagerRest = createAction(ReduxType.DELETE_MANAGER_REST)<RestaurantID>()
 
-export const deleteRest = createAction(ReduxType.DELETE_REST)<RestaurantID>()
