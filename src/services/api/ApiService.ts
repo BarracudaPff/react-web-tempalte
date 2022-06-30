@@ -212,7 +212,6 @@ export default class {
         if (fields?.length) params.fields = fields?.join(",")
         if (restId) params.restaurant_id = restId
         if (userId) params.waiter_id = userId
-        params.restaurant_id = 3
 
         return parseRequestArr(BaseApiService.get(API.WaitersList, params), User)
     }

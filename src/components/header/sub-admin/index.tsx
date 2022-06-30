@@ -21,9 +21,9 @@ const SubAdminHeader: FC<Props> = (props) => {
                 <Typography.Title>
                     {props.title}
                 </Typography.Title>
-                <div>
+                <Space> 
                     {props.children}
-                </div>
+                </Space>
             </div>
             {/*<Row>*/}
             {/*    <Col flex={"auto"}>*/}

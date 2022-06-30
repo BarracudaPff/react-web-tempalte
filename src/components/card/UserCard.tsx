@@ -30,7 +30,6 @@ const UserCard: FC<Props> = (props) => {
         //         console.log(e)
         //     })
     }
-    console.log(user.waiterInfo?.avatar)
 
     return (
         <Card

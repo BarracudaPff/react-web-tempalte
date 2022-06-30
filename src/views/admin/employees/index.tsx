@@ -1,8 +1,8 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
 import SubAdminHeader from "src/components/header/sub-admin"
-import {Button, Checkbox, Form, Input, InputNumber, List, Modal, Row, Select, Upload, UploadProps} from "antd"
+import {Button, Checkbox, Form, Input, InputNumber, List, Modal, Select, Upload} from "antd"
 import {PlusOutlined} from "@ant-design/icons"
-import {capitalize, convertModelToFormData, randomEmail, randomName, randomPassword, randomPhone, randomSurname} from "src/utils"
+import {capitalize, randomEmail, randomName, randomPassword, randomPhone, randomSurname} from "src/utils"
 import {RestService} from "src/services/RestService"
 import Config from "src/config"
 import {useDispatch, useSelector} from "src/redu/store"
@@ -13,12 +13,12 @@ import {addAllUsers} from "src/redu/actions/waiters"
 import UserCard from "src/components/card/UserCard"
 import {RestaurantID, TeamID} from "src/models/types/primitive"
 import {RestField} from "src/services/api/ApiService"
-import {ApiService} from "src/services"
 import ImgCrop from "antd-img-crop";
 import {UploadFile} from "antd/es/upload/interface"
 import {RcFile} from "antd/lib/upload"
-import PasswordInput from "src/components/input/password"
-import AsyncButton from "src/components/buttons/AsyncButton"
+import {PageNumberParam} from "src/utils/hooks/useSearchParam"
+import {useSearchParam} from "src/utils/hooks"
+import {NumberParam} from "serialize-query-params"
 
 interface Props {
 }
@@ -42,6 +42,9 @@ type ActiveKeyType = "basic" | "address" | "legal" | "finance" | "payback" | "ca
 const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [formRequesting, setFormRequesting] = useState(false);
+    const [loadingUsers, setLoadingUsers] = useState(false);
+
+    const [rest, setRest] = useSearchParam("rest", NumberParam);
 
     const [form] = Form.useForm<CreationData>()
     const selectedRestId = Form.useWatch("restId", form)
@@ -56,16 +59,21 @@ const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
     const toggleCreateModal = () => setShowCreateModal(it => !it)
 
     useEffect(() => {
-        UserService.list().then(users => {
-            dispatch(addAllUsers(users))
-        }).catch(e => notification.error({ message: "Не получилось получить список пользователей" }, e))
-    }, [])
+        if (!rest) return
+
+        setLoadingUsers(true)
+        UserService.list(rest)
+            .then(users => dispatch(addAllUsers({ users, restId: rest })))
+            .catch(e => notification.error({ message: "Не получилось получить список пользователей" }, e))
+            .then(() => setLoadingUsers(false))
+    }, [rest])
 
     useEffect(() => {
         if (rests.length) return
 
         RestService.listWithFieldsRest(undefined, [RestField.TEAMS])
-            .then(rests => dispatch(addAllRest(rests))).catch(e => notification.error({ message: "Не получилось получить список ресторанов" }, e))
+            .then(rests => dispatch(addAllRest(rests)))
+            .catch(e => notification.error({ message: "Не получилось получить список ресторанов" }, e))
     }, [])
 
     const createUser = () => {
@@ -109,16 +117,20 @@ const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
     return (
         <>
             <SubAdminHeader title={"Сотрудники"}>
+                {rests && <Select placeholder="Выберете ресторан" onChange={key => setRest(key)} value={rest}>
+                    {rests.map(({ rest }) => <Select.Option key={rest.id} value={rest.id}>{rest.fullName}</Select.Option>)}
+                </Select>}
                 <Button type="primary" icon={<PlusOutlined/>} shape={"round"} size={"large"} onClick={toggleCreateModal}>
                     Добавить сотрудника
                 </Button>
             </SubAdminHeader>
-            <List
+            {rest && <List
                 grid={{
                     gutter: 24,
                     column: 3
                 }}
-                dataSource={users}
+                loading={loadingUsers}
+                dataSource={users.filter(it => it.restId == rest)}
                 split={false}
                 renderItem={({ user }) => (
                     <List.Item>
@@ -131,7 +143,7 @@ const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
                         />
                     </List.Item>
                 )}
-            />
+            />}
             <Modal
                 okText={"Создать"}
                 onOk={() => form.submit()}
