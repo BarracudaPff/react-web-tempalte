@@ -6,6 +6,12 @@ export function url(url: string): string {
     return `${API_ROOT}${url}`
 }
 
+export function img(url?: string): string | null {
+    if (!url) return null
+
+    return `${API_ROOT}/avatars/${url}`
+}
+
 export const API = {
     // requests
     // ListReviews: url("/goods/reviews/list"),

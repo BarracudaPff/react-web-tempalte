@@ -11,7 +11,7 @@ export const randomVerb = () => randFromArr(ru_verbs)
 export const randomName = () => randFromArr(ru_names)
 export const randomSurname = () => randFromArr(ru_surnames)
 export const randomEmail = () => randomWords(2).join("@") + ".com"
-export const randomPhone = () => "+7" + Math.floor(1000000000 + Math.random() * 9000000000);
+export const randomPhone = () => "+7911" + Math.floor(1000000 + Math.random() * 9000000);
 export const randomPassword = () => randomWords(2).join("$") + Math.floor(Math.random() * 10000)
 
 export function removePrefix(line: string, prefix: string) {

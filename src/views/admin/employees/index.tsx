@@ -114,13 +114,17 @@ const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
                 </Button>
             </SubAdminHeader>
             <List
+                grid={{
+                    gutter: 24,
+                    column: 3
+                }}
                 dataSource={users}
                 split={false}
                 renderItem={({ user }) => (
                     <List.Item>
                         <UserCard
                             user={user}
-                            style={{ flex: 1 }}
+                            // style={{ flex: 1 }}
                             onClick={({ id }) => {
                             }}
                             onDelete={(id) => dispatch(deleteRest(id))}
@@ -144,8 +148,8 @@ const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
                     feeDefault: true,
                     fee: Math.floor(Math.random() * 10),
                     email: randomEmail(),
-                    phone: randomPhone(),
                     password: randomPassword(),
+                    // phone: randomPhone(),
                 } : {
                     feeDefault: true
                 }}>

@@ -107,14 +107,11 @@ export namespace PC {
         waiterCode: "waiter_code"
     }
 
-    export type UserExtended = {
-        waiterInfo: "waiter_info"
-    } & User
-
     export type User = {
         isStaff: "is_staff"
         isFinanceManager: "is_finance_manager"
         staffStatus: "staff_status"
+        waiterInfo: "waiter_info"
     }
 
     export type TipRecord = {

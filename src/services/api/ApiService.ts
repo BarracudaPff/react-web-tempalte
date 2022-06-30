@@ -1,4 +1,4 @@
-import {staticImplements} from "src/models/types/mapping";
+import {Mappable, staticImplements} from "src/models/types/mapping";
 import ApiServiceI from "src/services/api/base"
 import {AuthSIDToken, AuthToken, User} from "src/models/application"
 import {AuthPhoneRequest, AuthPhoneSIDRequest, AuthRequest, AuthTokenI, NewWaiterRequest, UserI} from "src/models/domain"
@@ -8,7 +8,7 @@ import {BaseApiService} from "src/services/BaseApiService"
 import {Email, Phone, RestaurantID, UserID} from "src/models/types/primitive"
 import {Restaurant, RestaurantAddress, RestaurantFinanceInfo, RestaurantLegalInfo} from "src/models/application/restaurants"
 import {RestaurantPayout} from "src/models/application/payouts"
-import {convertModelToFormData, toFormData} from "src/utils"
+import {convertModelToFormData} from "src/utils"
 
 export enum RestField {
     OWNER = "owner",

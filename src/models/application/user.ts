@@ -1,14 +1,16 @@
 import {Email, Password, Phone, UserID} from "src/models/types/primitive"
 import {StaffStatus, UserRank} from "src/models/types/base"
 import {Nullable} from "src/models/types/utility"
-import {Patch, PatchHard, staticMappable} from "src/models/types/mapping"
-import {UserExtendedI, UserI} from "src/models/domain"
+import {PatchHard, staticMappable} from "src/models/types/mapping"
+import {UserI} from "src/models/domain"
 import {PC} from "src/models/config"
 import {RecordAt} from "src/models/application/base"
-import {WaiterInfoExtended} from "src/models/application/waiter"
+import {WaiterInfo, WaiterInfoExtended} from "src/models/application/waiter"
 
 @staticMappable<UserI, User>()
-export class User extends RecordAt implements Patch<UserI, PC.User> {
+export class User extends RecordAt implements PatchHard<UserI, PC.User, {
+    waiterInfo?: WaiterInfo
+}> {
     id: UserID
     email: Nullable<Email>
     phone: Nullable<Phone>
@@ -17,6 +19,8 @@ export class User extends RecordAt implements Patch<UserI, PC.User> {
     isStaff: boolean
     isFinanceManager: boolean
     staffStatus: StaffStatus
+
+    waiterInfo?: WaiterInfo
 
     constructor(data: UserI) {
         super(data)
@@ -28,6 +32,8 @@ export class User extends RecordAt implements Patch<UserI, PC.User> {
         this.isStaff = !!data.is_staff
         this.isFinanceManager = !!data.is_finance_manager
         this.staffStatus = data.staff_status
+
+        this.waiterInfo = data.waiter_info && new WaiterInfo(data.waiter_info)
     }
 
     isWaiter() {
@@ -46,19 +52,12 @@ export class User extends RecordAt implements Patch<UserI, PC.User> {
         return this.rank == UserRank.OWNER
     }
 
-    adminInitUri() {
-        return this.rank <= UserRank.WAITER ? '/admin/profile' : '/admin/restaurants'
+    fullName = () => {
+        if (!this.waiterInfo) return ""
+        return this.waiterInfo.firstName + " " + (this.waiterInfo.lastName ?? "")
     }
-}
 
-@staticMappable<UserExtendedI, UserExtended>()
-export class UserExtended extends User implements PatchHard<UserExtendedI, PC.UserExtended, {
-    waiterInfo: WaiterInfoExtended
-}> {
-    waiterInfo: WaiterInfoExtended
-
-    constructor(data: UserExtendedI) {
-        super(data)
-        this.waiterInfo = new WaiterInfoExtended(data.waiter_info)
+    adminInitUri() {
+        return this.rank <= UserRank.WAITER ? "/admin/profile" : "/admin/restaurants"
     }
 }

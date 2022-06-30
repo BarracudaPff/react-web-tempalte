@@ -23,7 +23,7 @@ export class UserService {
     }
 
     static list(restId?: RestaurantID, userId?: UserID) {
-        return ApiService.listUsers(restId, userId, [])
+        return ApiService.listUsers(restId, userId, [UserField.WAITER_INFO])
     }
 
     static getPhoneSID(req: AuthPhoneSIDRequest) {
