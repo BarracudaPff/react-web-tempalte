@@ -120,6 +120,16 @@ export function parseRequest<D, A>(req: Promise<Response>, cls: Mappable<D, A>):
         })
 }
 
+export function simpleRequest<A>(req: Promise<Response>): Promise<A> {
+    return req.then(data => data.json() as Promise<ResponseI<A>>)
+        .then(checkErrors)
+        .then(it => it.data)
+        .catch(err => {
+            console.error("Server request failed", err.toString())
+            throw err
+        })
+}
+
 export function parseRequestNull(req: Promise<Response>): Promise<null | undefined> {
     return req.then(data => data.json() as Promise<ResponseI<null | undefined>>)
         .then(checkErrors)

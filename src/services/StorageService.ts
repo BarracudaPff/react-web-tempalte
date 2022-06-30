@@ -1,5 +1,6 @@
 import AsyncStorage from "@barracudapff/async-storage";
 import {AuthToken, User} from "src/models/application"
+import {AuthTokenI, UserI} from "src/models/domain"
 
 const prefix = "@pt"
 
@@ -61,10 +62,11 @@ class StorageService {
 
     // Auth data
     static getAuthToken(): Promise<AuthToken | null> {
-        return StorageService.getObject(LOCAL_STORAGE.AUTH)
+        return StorageService.getObject<AuthTokenI>(LOCAL_STORAGE.AUTH)
+            .then(token => token && new AuthToken(token))
     }
 
-    static setAuthToken(token: AuthToken): Promise<void> {
+    static setAuthToken(token: AuthTokenI): Promise<void> {
         return StorageService.setObject(LOCAL_STORAGE.AUTH, token)
     }
 
@@ -73,10 +75,11 @@ class StorageService {
     }
 
     static getLocalUser(): Promise<User | null> {
-        return StorageService.getObject(LOCAL_STORAGE.USER)
+        return StorageService.getObject<UserI>(LOCAL_STORAGE.USER)
+            .then(token => token && new User(token))
     }
 
-    static setLocalUser(user: User): Promise<void> {
+    static setLocalUser(user: UserI): Promise<void> {
         return StorageService.setObject(LOCAL_STORAGE.USER, user)
     }
 

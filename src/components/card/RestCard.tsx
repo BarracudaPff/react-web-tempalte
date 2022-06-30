@@ -1,31 +1,52 @@
 import React, {FC} from "react";
-import {Avatar, Button, Card, Col, Divider, Row, Space, Tooltip, Typography} from "antd"
+import {Avatar, Button, Card, Col, Divider, notification, Popconfirm, Row, Space, Tooltip, Typography} from "antd"
 import {Restaurant} from "src/models/application/restaurants"
 import {GeneralCalendar} from "src/components/icons"
 import {percents, rublesPresentable, toPresentableShortDate} from "src/utils"
 import {DeleteOutlined, DownloadOutlined, PlusOutlined} from "@ant-design/icons"
 import "./style.scss"
+import {RestService} from "src/services/RestService"
+import {RestaurantID} from "src/models/types/primitive"
 
 interface Props {
     rest: Restaurant
     style?: React.CSSProperties
+    onClick?: (rest: Restaurant) => void
+    onDelete?: (id: RestaurantID) => void
 }
 
 const RestCard: FC<Props> = (props) => {
     const { rest } = props
 
+    const confirm = (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        if (!e) return
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        return RestService.delete(rest.id)
+            .then(_ => props.onDelete && props.onDelete(rest.id))
+            .then(() => notification.success({ message: "Ресторан успешно удален" }))
+            .catch((e) => {
+                notification.error({ message: "Не удалось удалить ресторан" })
+                console.log(e)
+            })
+    }
+
+    // console.log("rest", props.rest)
+
     return (
-        <Card style={props.style} hoverable className={"rest-card"}>
+        <Card style={props.style} hoverable className={"rest-card"} onClick={() => props.onClick && props.onClick(rest)}>
             <Row className={""}>
                 <Col flex={1} className={"r-data-cell"}>
-                    <Row>
+                    <Row wrap={false}>
                         <Col>
                             <Avatar size={48} shape={"square"}/>
                         </Col>
                         <Col flex={"auto"}
                              style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", marginLeft: 18 }}>
                             <Typography.Text style={{ display: "block" }}>{rest.owner?.email}</Typography.Text>
-                            <Typography.Title level={5} style={{margin: 0}}>{rest.fullName}</Typography.Title>
+                            <Typography.Title level={5} style={{ margin: 0 }}>{rest.fullName}</Typography.Title>
                         </Col>
                     </Row>
                     <Row justify={"space-between"}>
@@ -43,7 +64,8 @@ const RestCard: FC<Props> = (props) => {
                     </Row>
                 </Col>
                 <Divider type={"vertical"} style={{ height: "unset" }}/>
-                <Col flex={1} className={"r-data-cell"} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+                <Col flex={1} className={"r-data-cell"}
+                     style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                     <Row align={"middle"} justify={"space-between"}>
                         <Col>
                             <Typography.Title level={5}>
@@ -56,11 +78,16 @@ const RestCard: FC<Props> = (props) => {
                                     <Button type="primary" shape="circle" icon={<PlusOutlined/>}/>
                                 </Tooltip>
                                 <Tooltip title="Скачать статистику">
-                                    <Button type="primary" shape="circle" icon={<DownloadOutlined/>}/>
+                                    <Button type="dashed" shape="circle" icon={<DownloadOutlined/>}/>
                                 </Tooltip>
-                                <Tooltip title="Добавить сотрудник">
-                                    <Button type="primary" shape="circle" icon={<DeleteOutlined/>}/>
-                                </Tooltip>
+                                <Popconfirm
+                                    title="Удалить ресторан?"
+                                    onConfirm={confirm}>
+                                    <Button type="primary" shape="circle" danger icon={<DeleteOutlined/>} onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }}/>
+                                </Popconfirm>
                             </Space>
                         </Col>
                     </Row>

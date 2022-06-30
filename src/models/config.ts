@@ -1,8 +1,16 @@
-import {Restaurant, RestaurantFinanceInfo, RestaurantLegalInfo, RestaurantPaymentSettings} from "src/models/application/restaurants"
+import {
+    Restaurant,
+    RestaurantAddress,
+    RestaurantFinanceInfo,
+    RestaurantLegalInfo,
+    RestaurantPaymentSettings
+} from "src/models/application/restaurants"
 import {TipRecord} from "src/models/application/tips"
 import {Payout} from "src/models/application/payouts"
 import {User} from "src/models/application"
 import {WaiterInfo} from "src/models/application/waiter"
+import {UserI} from "src/models/domain"
+import {UserID} from "src/models/types/primitive"
 
 export namespace PCH {
     export type Rec = {
@@ -18,6 +26,9 @@ export namespace PCH {
 
     export type Rest = {
         owner?: User
+        manager?: User
+        managerId?: UserID
+        address?: RestaurantAddress
         legalInfo?: RestaurantLegalInfo
         financeInfo?: RestaurantFinanceInfo
         baseWaiters?: WaiterInfo[]
@@ -31,7 +42,6 @@ export namespace PC {
     }
 
     export type RestaurantLegalInfo = {
-        kpp:"KPP"
         restaurantId: "restaurant_id"
         organizationFullName: "organization_full_name"
         zipCode: "zip_code"

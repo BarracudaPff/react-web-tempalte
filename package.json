@@ -75,6 +75,7 @@
     "antd-password-input-strength": "^2.0.1",
     "lodash": "^4.17.21",
     "query-string": "^7.1.1",
+    "random-words": "^1.2.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-token-auth": "^2.3.8",

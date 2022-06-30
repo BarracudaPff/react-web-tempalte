@@ -20,13 +20,15 @@ import {WaiterInfo} from "src/models/application/waiter"
 export class Restaurant extends RecordAt implements PatchHard<RestaurantI, PC.Restaurant, PCH.Rest> {
     id: UserID
     ownerId: UserID
-    managerId: UserID
+    managerId?: UserID
     feeAmount: Double
     fullName: string
     verifyStatus: VerifyStatus
     is_demo: boolean
 
     owner?: User
+    manager?: User
+    address?: RestaurantAddress
     financeInfo?: RestaurantFinanceInfo
     legalInfo?: RestaurantLegalInfo
     baseWaiters?: WaiterInfo[]
@@ -43,6 +45,8 @@ export class Restaurant extends RecordAt implements PatchHard<RestaurantI, PC.Re
         this.is_demo = !!data.is_demo
 
         this.owner = data.owner && new User(data.owner)
+        this.manager = data.manager && new User(data.manager)
+        this.address = data.address && new RestaurantAddress(data.address)
         this.financeInfo = data.finance_info && new RestaurantFinanceInfo(data.finance_info)
         this.legalInfo = data.legal_info && new RestaurantLegalInfo(data.legal_info)
         this.baseWaiters = data.base_waiters && data.base_waiters.map(it => new WaiterInfo(it))
@@ -95,7 +99,7 @@ export class RestaurantLegalInfo implements Patch<RestaurantLegalInfoI, PC.Resta
         this.restaurantId = data.restaurant_id
         this.ogrn = data.ogrn
         this.inn = data.inn
-        this.kpp = data.KPP
+        this.kpp = data.kpp
         this.organizationFullName = data.organization_full_name
         this.zipCode = data.zip_code
         this.russiaSubject = data.russia_subject

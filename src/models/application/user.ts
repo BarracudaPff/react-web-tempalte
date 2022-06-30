@@ -30,6 +30,22 @@ export class User extends RecordAt implements Patch<UserI, PC.User> {
         this.staffStatus = data.staff_status
     }
 
+    isWaiter() {
+        return this.rank == UserRank.OWNER
+    }
+
+    isManagerOrStronger() {
+        return this.rank >= UserRank.MANAGER
+    }
+
+    isManager() {
+        return this.rank == UserRank.MANAGER
+    }
+
+    isOwner() {
+        return this.rank == UserRank.OWNER
+    }
+
     adminInitUri() {
         return this.rank <= UserRank.WAITER ? '/admin/profile' : '/admin/restaurants'
     }

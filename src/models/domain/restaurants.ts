@@ -24,7 +24,7 @@ import {RestaurantFinanceInfo, RestaurantLegalInfo, RestaurantPaymentSettings} f
 export interface RestaurantI extends RecordAtI {
     id: UserID
     owner_id: UserID
-    manager_id: UserID
+    manager_id?: UserID
     full_name: string
     verify_status: VerifyStatus
 
@@ -32,7 +32,9 @@ export interface RestaurantI extends RecordAtI {
     is_demo: BoolExt
 
     owner?: UserI
-    finance_info: RestaurantFinanceInfoI
+    manager?: UserI
+    address?: RestaurantAddressI
+    finance_info?: RestaurantFinanceInfoI
     legal_info?: RestaurantLegalInfoI
     base_waiters?: WaiterInfoI[]
     payment_settings?: RestaurantPaymentSettingsI
@@ -62,7 +64,7 @@ export interface RestaurantLegalInfoI extends RecordAtI {
     restaurant_id: RestaurantID
     ogrn: string
     inn: string
-    KPP: string
+    kpp: string
     organization_full_name: string
     zip_code: string
     russia_subject: string

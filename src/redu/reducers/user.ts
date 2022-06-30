@@ -1,7 +1,7 @@
 import * as userAct from "src/redu/actions/user"
-import {createReducer, ActionType} from "typesafe-actions"
-import {User} from "src/models/application"
 import {logIn, logOut} from "src/redu/actions/user"
+import {ActionType, createReducer} from "typesafe-actions"
+import {User} from "src/models/application"
 import {StorageService} from "src/services/StorageService"
 
 export interface UserState {
