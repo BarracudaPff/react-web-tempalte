@@ -1,10 +1,11 @@
 import {ApiService} from "src/services"
 import {Platform} from "src/utils/platform"
 import {StorageService} from "src/services/StorageService"
-import {AuthPhoneRequest, AuthPhoneSIDRequest} from "src/models/domain"
+import {AuthPhoneRequest, AuthPhoneSIDRequest, UserI} from "src/models/domain"
 import {User} from "src/models/application"
-import {Email, Password, Phone, RestaurantID, TeamID, UserID} from "src/models/types/primitive"
+import {Email, Password, Phone, RestaurantID, TeamID, UserID, WaiterCode} from "src/models/types/primitive"
 import {UserField} from "src/services/api/ApiService"
+import {RestService} from "src/services/RestService"
 
 export class UserService {
     static login(email: string, password: string) {
@@ -22,8 +23,16 @@ export class UserService {
             })
     }
 
+    static listWithFieldsRest(restId?: RestaurantID, userId?: UserID, fields?: UserField[]) {
+        return ApiService.listUsers(restId, userId, fields)
+    }
+
     static list(restId?: RestaurantID, userId?: UserID) {
         return ApiService.listUsers(restId, userId, [UserField.WAITER_INFO])
+    }
+
+    static fullList(restId?: RestaurantID, userId?: UserID) {
+        return ApiService.listUsers(restId, userId, [UserField.WAITER_INFO, UserField.TIPS, UserField.PAYOUTS, UserField.COMMENTS])
     }
 
     static getPhoneSID(req: AuthPhoneSIDRequest) {
@@ -74,5 +83,26 @@ export class UserService {
             cropY: 0,
             cropS: 100,
         })
+    }
+
+    //TODO: rewrite when method will be added
+    static getFullUser(code: WaiterCode) {
+        const restsPr = RestService.listWithFieldsRest(undefined, [])
+
+        return ApiService.getNarrowUserInfo(code).then(async data => {
+            const rests = await restsPr
+            const rest = rests.find(it => it.fullName == data.restaurant.fullName)
+            if (!rest) throw Error("Can't find rest with name " + data.restaurant.fullName)
+
+            const users = await UserService.listWithFieldsRest(rest.id, undefined, [UserField.WAITER_INFO])
+            const user = users.find(it => it.waiterInfo?.waiterCode == data.waiter?.waiterCode)
+            if (!user || !user.waiterInfo?.waiterCode) throw Error("Can't find user with code " + data.waiter?.waiterCode)
+
+            return UserService.fullList(rest.id, user.id).then(it => it[0])
+        })
+    }
+
+    static delete(id: UserID) {
+        return ApiService.deleteUser(id)
     }
 }

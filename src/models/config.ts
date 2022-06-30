@@ -36,11 +36,24 @@ export namespace PCH {
         paymentSettings?: RestaurantPaymentSettings
         teams?: Team[]
     }
+
+    export type WIN = {
+        content: undefined
+    }
 }
 
 export namespace PC {
+    export type Comment = {
+        waiterId: "waiter_id"
+        restaurantId: "restaurant_id"
+    }
+
+    export type WaiterInfoNarrow = {
+        isTeam: "is_team"
+    }
+
     export type RestaurantAddress = {
-        restaurantId:"restaurant_id"
+        restaurantId: "restaurant_id"
     }
 
     export type RestaurantLegalInfo = {

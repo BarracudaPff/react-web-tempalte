@@ -1,8 +1,10 @@
 import {BoolExt, Email, Password, Phone, UserID} from "src/models/types/primitive"
 import {StaffStatus, UserRank} from "src/models/types/base"
 import {RecordAtI} from "src/models/domain/base"
-import {WaiterInfoI} from "src/models/domain/waiter"
+import {CommentI, WaiterInfoI} from "src/models/domain/waiter"
 import {Nullable} from "src/models/types/utility"
+import {TipRecordI} from "src/models/domain/tips"
+import {PayoutI} from "src/models/domain/payouts"
 
 export interface UserI extends RecordAtI {
     id: UserID
@@ -15,4 +17,7 @@ export interface UserI extends RecordAtI {
     staff_status: StaffStatus
 
     waiter_info?: WaiterInfoI
+    tips?: TipRecordI[]
+    payouts?: PayoutI[]
+    comments?: CommentI[]
 }

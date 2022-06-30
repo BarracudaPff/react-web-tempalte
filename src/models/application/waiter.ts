@@ -1,7 +1,7 @@
-import {CardID, Double, RestaurantID, TeamID, UserID, WaiterCode, WaiterType} from "src/models/types/primitive"
+import {CardID, CommentID, Double, RestaurantID, TeamID, UserID, WaiterCode, WaiterType} from "src/models/types/primitive"
 import {Nullable} from "src/models/types/utility"
 import {Patch, PatchHard, staticMappable} from "src/models/types/mapping"
-import {WaiterInfoExtendedI, WaiterInfoI} from "src/models/domain/waiter"
+import {CommentI, WaiterInfoExtendedI, WaiterInfoI, WaiterInfoNarrowI} from "src/models/domain/waiter"
 import {PC, PCH} from "src/models/config"
 import {RecordAt} from "src/models/application/base"
 import {TipRecord} from "src/models/application/tips"
@@ -61,5 +61,42 @@ export class WaiterInfoExtended extends WaiterInfo implements PatchHard<WaiterIn
         this.restaurant = new Restaurant(data.restaurant)
         this.tips = data.tips.map(it => new TipRecord(it))
         this.payouts = data.payouts.map(it => new Payout(it))
+    }
+}
+
+@staticMappable<WaiterInfoNarrowI, WaiterInfoNarrow>()
+export class WaiterInfoNarrow implements PatchHard<WaiterInfoNarrowI, PC.WaiterInfoNarrow, PCH.WIN> {
+    isTeam: boolean
+    waiter?: WaiterInfo
+    restaurant: Restaurant
+    teamList: WaiterInfo[]
+    content: undefined
+
+    constructor(data: WaiterInfoNarrowI) {
+        this.isTeam = data.is_team
+        this.waiter = data.content.waiter && new WaiterInfo(data.content.waiter)
+        this.restaurant = new Restaurant(data.content.restaurant)
+        this.teamList = data.content.team_list.map(it => new WaiterInfo(it))
+    }
+}
+
+@staticMappable<CommentI, Comment>()
+export class Comment implements Patch<CommentI, PC.Comment> {
+    id: CommentID
+    waiterId: UserID
+    restaurantId: RestaurantID
+    rating: number
+    comment: string
+    remarks: any[]
+    table: string
+
+    constructor(data: CommentI) {
+        this.id = data.id
+        this.waiterId = data.waiter_id
+        this.restaurantId = data.restaurant_id
+        this.rating = data.rating
+        this.comment = data.comment
+        this.remarks = data.remarks
+        this.table = data.table
     }
 }

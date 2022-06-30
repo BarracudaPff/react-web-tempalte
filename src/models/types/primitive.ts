@@ -14,6 +14,7 @@ export type TeamID = number
 export type TicketID = number
 export type TicketMessageID = number
 export type Best2PayID = string
+export type CommentID = number
 
 export type TableNumber = string // string
 export type WaiterCode = string // [6]string

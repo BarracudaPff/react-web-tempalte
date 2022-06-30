@@ -5,6 +5,7 @@ import {UserID} from "src/models/types/primitive"
 import {User} from "src/models/application"
 import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons";
 import Avatar from "src/components/avatar"
+import {useNavigate} from "react-router-dom"
 
 interface Props {
     user: User
@@ -15,6 +16,7 @@ interface Props {
 
 const UserCard: FC<Props> = (props) => {
     const { user } = props
+    const nav = useNavigate()
 
     const confirm = (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
         if (!e) return
@@ -51,7 +53,7 @@ const UserCard: FC<Props> = (props) => {
                     {user.waiterInfo && <Typography.Text>{user.waiterInfo.waiterCode}</Typography.Text>}
                 </div>
             }
-            onClick={() => props.onClick && props.onClick(user)}>
+            onClick={() => props.onClick ? props.onClick(user) : user.waiterInfo && nav(user.waiterInfo.waiterCode)}>
             <Row>
                 <Col span={8}>
                     <Typography.Paragraph strong className={"user-cell-data"}>0</Typography.Paragraph>

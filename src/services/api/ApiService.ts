@@ -5,10 +5,11 @@ import {AuthPhoneRequest, AuthPhoneSIDRequest, AuthRequest, AuthTokenI, NewWaite
 import {parseRequest, parseRequestArr, parseRequestNull, simpleRequest} from "src/services"
 import {API} from "src/services/Endpoints"
 import {BaseApiService} from "src/services/BaseApiService"
-import {Email, Phone, RestaurantID, UserID} from "src/models/types/primitive"
+import {Email, Phone, RestaurantID, UserID, WaiterCode} from "src/models/types/primitive"
 import {Restaurant, RestaurantAddress, RestaurantFinanceInfo, RestaurantLegalInfo} from "src/models/application/restaurants"
 import {RestaurantPayout} from "src/models/application/payouts"
 import {convertModelToFormData} from "src/utils"
+import {WaiterInfoNarrow} from "src/models/application/waiter"
 
 export enum RestField {
     OWNER = "owner",
@@ -239,5 +240,13 @@ export default class {
             crop_y: data.cropY,
             crop_s: data.cropS,
         })), User)
+    }
+
+    static getNarrowUserInfo(code: WaiterCode) {
+        return parseRequest(BaseApiService.get(API.WaitersInfo, { code }), WaiterInfoNarrow)
+    }
+
+    static deleteUser(id: UserID) {
+        return simpleRequest(BaseApiService.post(API.WaitersDelete, { waiter_id: id }))
     }
 }

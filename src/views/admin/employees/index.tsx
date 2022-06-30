@@ -39,7 +39,7 @@ interface CreationData {
 
 type ActiveKeyType = "basic" | "address" | "legal" | "finance" | "payback" | "card" | "phone" | "manager"
 
-const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
+const AdminEmployeesView: FunctionComponent<Props> = (props) => {
     const [showCreateModal, setShowCreateModal] = useState(false)
     const [formRequesting, setFormRequesting] = useState(false);
     const [loadingUsers, setLoadingUsers] = useState(false);
@@ -137,8 +137,6 @@ const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
                         <UserCard
                             user={user}
                             // style={{ flex: 1 }}
-                            onClick={({ id }) => {
-                            }}
                             onDelete={(id) => dispatch(deleteRest(id))}
                         />
                     </List.Item>
@@ -237,4 +235,4 @@ const EmployeesRestaurantsView: FunctionComponent<Props> = (props) => {
     );
 };
 
-export default EmployeesRestaurantsView;
+export default AdminEmployeesView;

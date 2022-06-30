@@ -5,11 +5,16 @@ import {PatchHard, staticMappable} from "src/models/types/mapping"
 import {UserI} from "src/models/domain"
 import {PC} from "src/models/config"
 import {RecordAt} from "src/models/application/base"
-import {WaiterInfo, WaiterInfoExtended} from "src/models/application/waiter"
+import {Comment, WaiterInfo} from "src/models/application/waiter"
+import {TipRecord} from "src/models/application/tips"
+import {Payout} from "src/models/application/payouts"
 
 @staticMappable<UserI, User>()
 export class User extends RecordAt implements PatchHard<UserI, PC.User, {
     waiterInfo?: WaiterInfo
+    tips?: TipRecord[]
+    payouts?: Payout[]
+    comments?: Comment[]
 }> {
     id: UserID
     email: Nullable<Email>
@@ -21,6 +26,9 @@ export class User extends RecordAt implements PatchHard<UserI, PC.User, {
     staffStatus: StaffStatus
 
     waiterInfo?: WaiterInfo
+    tips?: TipRecord[]
+    payouts?: Payout[]
+    comments?: Comment[]
 
     constructor(data: UserI) {
         super(data)
@@ -34,6 +42,9 @@ export class User extends RecordAt implements PatchHard<UserI, PC.User, {
         this.staffStatus = data.staff_status
 
         this.waiterInfo = data.waiter_info && new WaiterInfo(data.waiter_info)
+        this.tips = data.tips?.map(it => new TipRecord(it))
+        this.payouts = data.payouts?.map(it => new Payout(it))
+        this.comments = data.comments?.map(it => new Comment(it))
     }
 
     isWaiter() {

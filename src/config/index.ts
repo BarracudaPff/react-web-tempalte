@@ -15,7 +15,7 @@ export default {
     mockForms: true && IS_DEV,
 
     baseURL: "/",
-    domainURL: IS_DEV ? "http://localhost:8080/" : null,
+    domainURL: IS_DEV ? "http://localhost:8080/" : "https://premiertips.org/",
 
     title: "Premier Tips",
     http: {

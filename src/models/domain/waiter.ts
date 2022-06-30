@@ -1,4 +1,4 @@
-import {BoolExt, CardID, Double, RestaurantID, TeamID, UserID, WaiterCode, WaiterType} from "src/models/types/primitive"
+import {BoolExt, CardID, CommentID, Double, RestaurantID, TeamID, UserID, WaiterCode, WaiterType} from "src/models/types/primitive"
 import {RecordAtI} from "src/models/domain/base"
 import {Nullable} from "src/models/types/utility"
 import {TipRecordI} from "src/models/domain/tips"
@@ -39,4 +39,23 @@ export interface WaiterInfoExtendedI extends WaiterInfoI {
     restaurant: RestaurantI
     tips: TipRecordI[]
     payouts: PayoutI[]
+}
+
+export interface WaiterInfoNarrowI {
+    is_team: boolean
+    content: {
+        waiter?: WaiterInfoI,
+        restaurant: RestaurantI,
+        team_list: WaiterInfoI[],
+    },
+}
+
+export interface CommentI {
+    id: CommentID
+    waiter_id: UserID
+    restaurant_id: RestaurantID
+    rating: number
+    comment: string
+    remarks: any[]
+    table: string
 }
