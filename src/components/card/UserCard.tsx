@@ -3,19 +3,20 @@ import {Card, Col, Row, Typography} from "antd"
 import "./style.scss"
 import {UserID} from "src/models/types/primitive"
 import {User} from "src/models/application"
-import {EditOutlined, EllipsisOutlined, SettingOutlined} from "@ant-design/icons";
 import Avatar from "src/components/avatar"
 import {useNavigate} from "react-router-dom"
+import {WaiterInfo} from "src/models/application/waiter"
 
 interface Props {
-    user: User
+    user?: User // TODO: deprecated, remove
+    waiterInfo?: WaiterInfo
     style?: React.CSSProperties
     onClick?: (rest: User) => void
     onDelete?: (id: UserID) => void
 }
 
 const UserCard: FC<Props> = (props) => {
-    const { user } = props
+    const waiterInfo = props.user?.waiterInfo ?? props.waiterInfo
     const nav = useNavigate()
 
     const confirm = (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -39,7 +40,7 @@ const UserCard: FC<Props> = (props) => {
             style={props.style}
             className={"user-card"}
             cover={
-                !!user && <div style={{
+                !!waiterInfo && <div style={{
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -48,12 +49,15 @@ const UserCard: FC<Props> = (props) => {
                     borderRadius: 24,
                     backgroundColor: "#F4F9FD"
                 }}>
-                    <Avatar size={58} src={user.waiterInfo?.avatar}/>
-                    <Typography.Title level={5}>{user.fullName()}</Typography.Title>
-                    {user.waiterInfo && <Typography.Text>{user.waiterInfo.waiterCode}</Typography.Text>}
+                    <Avatar size={58} src={waiterInfo?.avatar}/>
+                    <Typography.Title level={5}>{waiterInfo.fullName()}</Typography.Title>
+                    {waiterInfo && <Typography.Text>{waiterInfo.waiterCode}</Typography.Text>}
                 </div>
             }
-            onClick={() => props.onClick ? props.onClick(user) : user.waiterInfo && nav(user.waiterInfo.waiterCode)}>
+            onClick={() => props.onClick
+                ? props.onClick(props.user!!)
+                : waiterInfo && nav("/admin/employees/" + waiterInfo.waiterCode, { replace: true })
+            }>
             <Row>
                 <Col span={8}>
                     <Typography.Paragraph strong className={"user-cell-data"}>0</Typography.Paragraph>

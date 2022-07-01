@@ -63,8 +63,10 @@ export class User extends RecordAt implements PatchHard<UserI, PC.User, {
         return this.rank == UserRank.OWNER
     }
 
-    fullName = () => {
+    fullName() {
         if (!this.waiterInfo) return ""
+        if (this.waiterInfo.fullName) return this.waiterInfo.fullName()
+        //TODO: remove legacy
         return this.waiterInfo.firstName + " " + (this.waiterInfo.lastName ?? "")
     }
 

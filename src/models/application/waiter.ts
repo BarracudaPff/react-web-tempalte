@@ -48,6 +48,8 @@ export class WaiterInfo extends RecordAt implements Patch<WaiterInfoI, PC.Waiter
         this.waiterCode = data.waiter_code
         this.goal = data.goal
     }
+
+    fullName = () => this.firstName + " " + (this.lastName ?? "")
 }
 
 @staticMappable<WaiterInfoExtendedI, WaiterInfoExtended>()

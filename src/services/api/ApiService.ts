@@ -5,11 +5,13 @@ import {AuthPhoneRequest, AuthPhoneSIDRequest, AuthRequest, AuthTokenI, NewWaite
 import {parseRequest, parseRequestArr, parseRequestNull, simpleRequest} from "src/services"
 import {API} from "src/services/Endpoints"
 import {BaseApiService} from "src/services/BaseApiService"
-import {Email, Phone, RestaurantID, UserID, WaiterCode} from "src/models/types/primitive"
+import {Email, Phone, RestaurantID, TeamID, UserID, WaiterCode} from "src/models/types/primitive"
 import {Restaurant, RestaurantAddress, RestaurantFinanceInfo, RestaurantLegalInfo} from "src/models/application/restaurants"
 import {RestaurantPayout} from "src/models/application/payouts"
 import {convertModelToFormData} from "src/utils"
 import {WaiterInfoNarrow} from "src/models/application/waiter"
+import {Team} from "src/models/application/team"
+import teams from "src/views/admin/teams"
 
 export enum RestField {
     OWNER = "owner",
@@ -248,5 +250,47 @@ export default class {
 
     static deleteUser(id: UserID) {
         return simpleRequest(BaseApiService.post(API.WaitersDelete, { waiter_id: id }))
+    }
+
+    static addTeam(restId: RestaurantID, data: {
+        name: string,
+        showLastName: boolean,
+        useTeamCode: boolean,
+        groupTips: boolean,
+        showList: boolean,
+    }) {
+        return parseRequest(BaseApiService.post(API.WaitersTeamsNew, {
+            restaurant_id: restId,
+            team_name: data.name,
+            show_last_name: data.showLastName,
+            use_team_code: data.useTeamCode,
+            group_tips: data.groupTips,
+            show_list: data.showList,
+        }), Team)
+    }
+
+    static updateTeam(teamId: TeamID, data: {
+        leadId: UserID,
+        name: string,
+        showLastName: boolean,
+        useTeamCode: boolean,
+        groupTips: boolean,
+        showList: boolean,
+        showWaiter: boolean,
+    }) {
+        return parseRequest(BaseApiService.post(API.WaitersTeamsUpdate, {
+            team_id: teamId,
+            lead_id: data.leadId,
+            team_name: data.name,
+            show_last_name: data.showLastName,
+            use_team_code: data.useTeamCode,
+            group_tips: data.groupTips,
+            show_list: data.showList,
+            show_waiter: data.showWaiter,
+        }), Team)
+    }
+
+    static deleteTeam(id: TeamID) {
+        return simpleRequest(BaseApiService.post(API.WaitersTeamsDelete, { team_id: id }))
     }
 }

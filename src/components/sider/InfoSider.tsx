@@ -56,10 +56,10 @@ const InfoSider: FC<Props> = ({ user }) => {
                     </a>
                     <Button type={"dashed"} icon={<EditOutlined/>}/>
                     <Popconfirm
-                        title="Are you sure to delete this task?"
+                        title="Удалить пользователя?"
                         onConfirm={removeUser}
-                        okText="Yes"
-                        cancelText="No">
+                        okText="Да"
+                        cancelText="Нет">
                         <Button danger icon={<DeleteOutlined/>}/>
                     </Popconfirm>
                 </Space>

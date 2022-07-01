@@ -13,6 +13,7 @@ import AdminRestaurantsView from "src/views/admin/restaurants"
 import AdminProfileView from "src/views/admin/profile"
 import AdminEmployeesView from "src/views/admin/employees"
 import AdminEmployeeProfileView from "src/views/admin/employees/employee"
+import AdminTeamsView from "src/views/admin/teams"
 
 // const LandingView = React.lazy(() => import("src/views/landing"))
 
@@ -83,15 +84,21 @@ export function MainRoutes() {
                     }}/>,
                 },
                 {
+                    path: "teams", element: <PrivateRoute element={AdminTeamsView} meta={{
+                        requiresAuth: true,
+                        title: "Команды"
+                    }}/>,
+                },
+                {
                     path: "*",
                     element: (
-                        <Navigate to="/admin" replace/>
-                        // <div>
-                        //     <PrivateRoute element={NoMatch} meta={{
-                        //         requiresAuth: false,
-                        //         title: "404 Not Found"
-                        //     }}/>
-                        // </div>
+                        // <Navigate to="/admin" replace/>
+                        <div>
+                            <PrivateRoute element={NoMatch} meta={{
+                                requiresAuth: false,
+                                title: "404 Not Found"
+                            }}/>
+                        </div>
                     )
                 }
             ]
