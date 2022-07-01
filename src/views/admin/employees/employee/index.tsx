@@ -1,11 +1,13 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
-import {Result, Spin, Typography} from "antd"
+import {Col, List, Result, Row, Segmented, Spin} from "antd"
 import SubAdminHeader from "src/components/header/sub-admin"
 import {User} from "src/models/application"
 import {useNavigate, useParams} from "react-router-dom"
 import {UserService} from "src/services/UserService"
 import notification from "src/utils/notification"
 import InfoSider from "src/components/sider/InfoSider"
+import {useSearchParam} from "src/utils/hooks"
+import {NumberParam, StringParam, withDefault} from "serialize-query-params"
 
 interface Props {
 }
@@ -14,6 +16,8 @@ const AdminEmployeeProfileView: FunctionComponent<Props> = (props) => {
     const nav = useNavigate()
     const params = useParams()
     const [user, setUser] = useState<User>();
+
+    const [infoMode, setInfoMode] = useSearchParam("info", withDefault(StringParam, "tips"));
 
     useEffect(() => {
         if (!params.id) return
@@ -25,7 +29,6 @@ const AdminEmployeeProfileView: FunctionComponent<Props> = (props) => {
                 nav("/admin/employees")
             })
     }, []);
-
 
     if (!user) {
         return (
@@ -50,9 +53,32 @@ const AdminEmployeeProfileView: FunctionComponent<Props> = (props) => {
         <>
             <SubAdminHeader title={"Профиль - " + user.waiterInfo.firstName}>
             </SubAdminHeader>
-            <div>
-                <InfoSider user={user}/>
-            </div>
+            <Row gutter={16}>
+                <Col>
+                    <InfoSider user={user}/>
+                </Col>
+                <Col flex={"auto"} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <Segmented
+                        block
+                        style={{ width: "100%" }}
+                        defaultValue={infoMode}
+                        onChange={(it) => setInfoMode(it as string)}
+                        options={[
+                            { value: "tips", label: "Чаевые" },
+                            { value: "payouts", label: "Выплаты" },
+                        ]}/>
+                    {infoMode == "tips" && <List dataSource={user.tips} renderItem={(item) => (
+                        <List.Item>
+                        {/*TODO: show tips*/}
+                        </List.Item>
+                    )}/>}
+                    {infoMode == "payouts" && <List dataSource={user.tips} renderItem={(item) => (
+                        <List.Item>
+                            {/*TODO: show payouts*/}
+                        </List.Item>
+                    )}/>}
+                </Col>
+            </Row>
         </>
     );
 };
