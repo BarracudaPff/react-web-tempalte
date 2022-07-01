@@ -85,11 +85,16 @@ export class UserService {
         })
     }
 
+
+    static getNarrowUserInfo(code: WaiterCode) {
+        return ApiService.getNarrowUserInfo(code)
+    }
+
     //TODO: rewrite when method will be added
     static getFullUser(code: WaiterCode) {
         const restsPr = RestService.listWithFieldsRest(undefined, [])
 
-        return ApiService.getNarrowUserInfo(code).then(async data => {
+        return UserService.getNarrowUserInfo(code).then(async data => {
             const rests = await restsPr
             const rest = rests.find(it => it.fullName == data.restaurant.fullName)
             if (!rest) throw Error("Can't find rest with name " + data.restaurant.fullName)

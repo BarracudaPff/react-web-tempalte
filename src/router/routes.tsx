@@ -15,6 +15,7 @@ import AdminEmployeesView from "src/views/admin/employees"
 import AdminEmployeeProfileView from "src/views/admin/employees/employee"
 import AdminTeamsView from "src/views/admin/teams"
 import AdminCustomisationView from "src/views/admin/customisation"
+import TipView from "src/views/tip/TipView"
 
 // const LandingView = React.lazy(() => import("src/views/landing"))
 
@@ -54,6 +55,10 @@ export function MainRoutes() {
                 { path: "signin", element: <AuthSignInView/>, },
                 { path: "signup", element: <AuthSignUpView/>, },
             ]
+        },
+        {
+            path: "/tip/:waiterCode",
+            element: <TipView/>
         },
         {
             path: "/admin",
