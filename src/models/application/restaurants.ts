@@ -16,6 +16,7 @@ import {ensureDate} from "src/utils"
 import {User} from "src/models/application/user"
 import {WaiterInfo} from "src/models/application/waiter"
 import {Team} from "src/models/application/team"
+import {RestaurantDesign} from "src/models/application/design"
 
 @staticMappable<RestaurantI, Restaurant>()
 export class Restaurant extends RecordAt implements PatchHard<RestaurantI, PC.Restaurant, PCH.Rest> {
@@ -32,8 +33,9 @@ export class Restaurant extends RecordAt implements PatchHard<RestaurantI, PC.Re
     address?: RestaurantAddress
     financeInfo?: RestaurantFinanceInfo
     legalInfo?: RestaurantLegalInfo
-    baseWaiters?: WaiterInfo[]
     paymentSettings?: RestaurantPaymentSettings
+    tipsDesign?: RestaurantDesign
+    baseWaiters?: WaiterInfo[]
     teams?: Team[]
 
     constructor(data: RestaurantI) {
@@ -53,6 +55,7 @@ export class Restaurant extends RecordAt implements PatchHard<RestaurantI, PC.Re
         this.legalInfo = data.legal_info && new RestaurantLegalInfo(data.legal_info)
         this.baseWaiters = data.base_waiters && data.base_waiters.map(it => new WaiterInfo(it))
         this.paymentSettings = data.payment_settings && new RestaurantPaymentSettings(data.payment_settings)
+        this.tipsDesign = data.tips_design && new RestaurantDesign(data.tips_design)
         this.teams = data.teams && data.teams.map(it => new Team(it))
     }
 }

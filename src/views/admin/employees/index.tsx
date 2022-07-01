@@ -175,24 +175,6 @@ const AdminEmployeesView: FunctionComponent<Props> = (props) => {
                                 {!avatar?.length && "Загрузить"}
                             </Upload>
                         </ImgCrop>
-                        {/*<ImgCrop rotate modalTitle={"Изменить изображение"} onModalOk={()=>{*/}
-                        {/*    console.log("!")*/}
-                        {/*}}>*/}
-                        {/*    <Upload*/}
-                        {/*        maxCount={1}*/}
-                        {/*        onChange={c => {*/}
-                        {/*            console.log({ c })*/}
-                        {/*            form.setFieldsValue({ avatar: c.file })*/}
-                        {/*        }}*/}
-                        {/*        onRemove={() => {*/}
-                        {/*            form.setFieldsValue({ avatar: undefined })*/}
-                        {/*        }}*/}
-                        {/*        onDownload={f => console.log({ f })}*/}
-                        {/*        // onPreview={p => console.log({ p })}*/}
-                        {/*        beforeUpload={() => false} listType="picture-card">*/}
-                        {/*        {!avatar && "Загрузить"}*/}
-                        {/*    </Upload>*/}
-                        {/*</ImgCrop>*/}
                     </Form.Item>
                     <Form.Item name="restId" label="Ресторан" required>
                         <Select placeholder="Ресторан сотрудника">

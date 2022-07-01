@@ -14,6 +14,7 @@ import AdminProfileView from "src/views/admin/profile"
 import AdminEmployeesView from "src/views/admin/employees"
 import AdminEmployeeProfileView from "src/views/admin/employees/employee"
 import AdminTeamsView from "src/views/admin/teams"
+import AdminCustomisationView from "src/views/admin/customisation"
 
 // const LandingView = React.lazy(() => import("src/views/landing"))
 
@@ -87,6 +88,12 @@ export function MainRoutes() {
                     path: "teams", element: <PrivateRoute element={AdminTeamsView} meta={{
                         requiresAuth: true,
                         title: "Команды"
+                    }}/>,
+                },
+                {
+                    path: "customisation", element: <PrivateRoute element={AdminCustomisationView} meta={{
+                        requiresAuth: true,
+                        title: "Кастомизация"
                     }}/>,
                 },
                 {

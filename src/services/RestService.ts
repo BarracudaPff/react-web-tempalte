@@ -1,8 +1,8 @@
-import {ApiService, simpleRequest} from "src/services"
+import {ApiService} from "src/services"
 import {RestField} from "src/services/api/ApiService"
-import {BaseApiService} from "src/services/BaseApiService"
-import {API} from "src/services/Endpoints"
 import {RestaurantID} from "src/models/types/primitive"
+import {RestaurantDesign} from "src/models/application/design"
+import {OmitTS} from "src/models/types/utility"
 
 export class RestService {
     static createNew(name: string, percent: number) {
@@ -86,5 +86,9 @@ export class RestService {
 
     static delete(id: RestaurantID) {
         return ApiService.deleteRest(id)
+    }
+
+    static updateDesign(id: RestaurantID, design: OmitTS<RestaurantDesign, "toObj">) {
+        return ApiService.updateDesign(id, design)
     }
 }

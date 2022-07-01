@@ -81,7 +81,7 @@ export class UserService {
 
             cropX: 0,
             cropY: 0,
-            cropS: 100,
+            cropS: 100, //TODO: remove hardcoded int
         })
     }
 

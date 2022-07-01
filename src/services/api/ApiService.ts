@@ -5,13 +5,15 @@ import {AuthPhoneRequest, AuthPhoneSIDRequest, AuthRequest, AuthTokenI, NewWaite
 import {parseRequest, parseRequestArr, parseRequestNull, simpleRequest} from "src/services"
 import {API} from "src/services/Endpoints"
 import {BaseApiService} from "src/services/BaseApiService"
-import {Email, Phone, RestaurantID, TeamID, UserID, WaiterCode} from "src/models/types/primitive"
+import {Color, Email, Phone, RestaurantID, TeamID, UserID, WaiterCode} from "src/models/types/primitive"
 import {Restaurant, RestaurantAddress, RestaurantFinanceInfo, RestaurantLegalInfo} from "src/models/application/restaurants"
 import {RestaurantPayout} from "src/models/application/payouts"
 import {convertModelToFormData} from "src/utils"
 import {WaiterInfoNarrow} from "src/models/application/waiter"
 import {Team} from "src/models/application/team"
 import teams from "src/views/admin/teams"
+import {RestaurantDesign} from "src/models/application/design"
+import {OmitTS} from "src/models/types/utility"
 
 export enum RestField {
     OWNER = "owner",
@@ -20,6 +22,7 @@ export enum RestField {
     INFO_FINANCE = "finance_info",
     INFO_LEGAL = "legal_info",
     TIPS = "tips",
+    TIPS_DESIGN = "tips_design",
     PAYOUTS = "payouts",
     WAITERS = "waiters",
     WAITERS_BASE = "base_waiters",
@@ -292,5 +295,35 @@ export default class {
 
     static deleteTeam(id: TeamID) {
         return simpleRequest(BaseApiService.post(API.WaitersTeamsDelete, { team_id: id }))
+    }
+
+    static updateDesign(id: RestaurantID, design: OmitTS<RestaurantDesign, "toObj">) {
+        return parseRequest(BaseApiService.postFormData(API.RestaurantUpdateTipsDesign, convertModelToFormData({
+            restaurant_id: id,
+            big_logo: design.bigLogo, // TODO: Check why sometimes pending
+
+            bg_grad: design.bgGrad,
+            fg_grad: design.fgGrad,
+            accents: design.accents,
+            comment: design.commentFrame,
+            percentages: design.additionalFields.percentages,
+            amounts: design.additionalFields.amounts,
+            custom_placeholder: design.additionalFields.customPlaceholder,
+            delete_placeholer: !!design.additionalFields.customPlaceholder,
+            // delete_texture: !!design.texture,
+            // texture: design.texture,
+
+            font_color: design.additionalFields.additionalColors.fontColor,
+            star_color: design.additionalFields.additionalColors.starColor,
+            font_color_picked: design.additionalFields.additionalColors.fontColorPicked,
+            star_color_picked: design.additionalFields.additionalColors.starColorPicked,
+            button_disabled_background_color: design.additionalFields.additionalColors.buttonDisabledBackgroundColor,
+            payment_button_fg: design.additionalFields.additionalColors.paymentButton_fg,
+            payment_button_bg: design.additionalFields.additionalColors.paymentButton_bg,
+            shadow: design.additionalFields.additionalColors.shadow,
+            show_border: design.additionalFields.additionalColors.showBorder,
+            warn_color: design.additionalFields.additionalColors.warnColor,
+            err_color: design.additionalFields.additionalColors.errColor,
+        })), Team)
     }
 }

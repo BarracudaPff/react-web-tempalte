@@ -30,4 +30,7 @@ export interface RestaurantDesignI extends RecordAtI {
         percentages: Int[],
         custom_placeholder: Nullable<string> // Кастомный текст плейсхолдера, для поля комментария
     }
+
+    warn_color?: Color
+    err_color?: Color
 }

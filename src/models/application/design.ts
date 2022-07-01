@@ -7,15 +7,18 @@ import {RecordAt} from "src/models/application/base"
 
 type AF = {
     additionalColors: {
-        fontColor: Color,
-        starColor: Color,
-        fontColorPicked: Color,
-        starColorPicked: Color,
+        fontColor: Color
+        starColor: Color
+        fontColorPicked: Color
+        starColorPicked: Color
         buttonDisabledBackgroundColor: Color
         paymentButton_fg: Color
         paymentButton_bg: Color
         shadow: Color
         showBorder: boolean
+
+        warnColor: Color
+        errColor: Color
     },
     amounts: Int[],
     percentages: Int[],
@@ -63,10 +66,28 @@ export class RestaurantDesign extends RecordAt implements PatchHard<RestaurantDe
                 paymentButton_bg: data.additional_fields.additional_colors.payment_button_bg,
                 shadow: data.additional_fields.additional_colors.shadow,
                 showBorder: !!data.additional_fields.additional_colors.show_border,
+
+                warnColor: data.warn_color ?? "#faad14",
+                errColor: data.err_color ?? "#FF4D68",
             },
             amounts: data.additional_fields.amounts,
             percentages: data.additional_fields.percentages,
             customPlaceholder: data.additional_fields.custom_placeholder
+        }
+    }
+
+    toObj() {
+        return {
+            restaurantId: this.restaurantId,
+            hideOurLogo: this.hideOurLogo,
+            bgGrad: this.bgGrad,
+            fgGrad: this.fgGrad,
+            accents: this.accents,
+            commentFrame: this.commentFrame,
+            bigLogo: this.bigLogo,
+            texture: this.texture,
+            smallLogo: this.smallLogo,
+            additionalFields: this.additionalFields,
         }
     }
 }

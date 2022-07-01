@@ -12,6 +12,12 @@ export function img(url?: string): string | null {
     return `${API_ROOT}/avatars/${url}`
 }
 
+export function designImg(url?: string): string | null {
+    if (!url) return null
+
+    return `${API_ROOT}/design_image/${url}`
+}
+
 export const API = {
     // requests
     // ListReviews: url("/goods/reviews/list"),

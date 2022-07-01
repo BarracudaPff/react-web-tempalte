@@ -13,6 +13,9 @@ export const randomSurname = () => randFromArr(ru_surnames)
 export const randomEmail = () => randomWords(2).join("@") + ".com"
 export const randomPhone = () => "+7911" + Math.floor(1000000 + Math.random() * 9000000);
 export const randomPassword = () => randomWords(2).join("$") + Math.floor(Math.random() * 10000)
+export const randomBool = () => Math.random() > 0.5
+export const randomColor = () => "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+export const randomInt = (max: number = 1000) => Math.floor(Math.random() * max)
 
 export function removePrefix(line: string, prefix: string) {
     const has = line.indexOf(prefix) === 0

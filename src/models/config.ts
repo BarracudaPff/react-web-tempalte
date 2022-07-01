@@ -12,6 +12,8 @@ import {WaiterInfo} from "src/models/application/waiter"
 import {UserI} from "src/models/domain"
 import {UserID} from "src/models/types/primitive"
 import {Team} from "src/models/application/team"
+import {RestaurantDesign} from "src/models/application/design"
+import {RestaurantDesignI} from "src/models/domain/design"
 
 export namespace PCH {
     export type Rec = {
@@ -32,8 +34,9 @@ export namespace PCH {
         address?: RestaurantAddress
         legalInfo?: RestaurantLegalInfo
         financeInfo?: RestaurantFinanceInfo
-        baseWaiters?: WaiterInfo[]
         paymentSettings?: RestaurantPaymentSettings
+        tipsDesign?: RestaurantDesign
+        baseWaiters?: WaiterInfo[]
         teams?: Team[]
     }
 
@@ -100,8 +103,9 @@ export namespace PC {
 
         financeInfo: "finance_info"
         legalInfo: "finance_info"
-        baseWaiters: "finance_info"
         paymentSettings: "finance_info"
+        tipsDesign: "tips_design"
+        baseWaiters: "finance_info"
     }
 
     export type WaiterInfo = {
