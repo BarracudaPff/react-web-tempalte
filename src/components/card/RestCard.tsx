@@ -1,5 +1,5 @@
 import React, {FC} from "react";
-import {Avatar, Button, Card, Col, Divider, notification, Popconfirm, Row, Space, Tooltip, Typography} from "antd"
+import {Avatar as AvatarAnt, Button, Card, Col, Divider, notification, Popconfirm, Row, Space, Tooltip, Typography} from "antd"
 import {Restaurant} from "src/models/application/restaurants"
 import {GeneralCalendar} from "src/components/icons"
 import {percents, rublesPresentable, toPresentableShortDate} from "src/utils"
@@ -7,6 +7,7 @@ import {DeleteOutlined, DownloadOutlined, PlusOutlined} from "@ant-design/icons"
 import "./style.scss"
 import {RestService} from "src/services/RestService"
 import {RestaurantID} from "src/models/types/primitive"
+import Avatar from "src/components/avatar"
 
 interface Props {
     rest: Restaurant
@@ -102,7 +103,7 @@ const RestCard: FC<Props> = (props) => {
                         </Col>
                         <Col span={8}>
                             <Typography.Text style={{ display: "block" }}>Сотрудники</Typography.Text>
-                            <Avatar.Group
+                            <AvatarAnt.Group
                                 maxCount={2}
                                 maxPopoverTrigger="click"
                                 size={24}
@@ -110,7 +111,7 @@ const RestCard: FC<Props> = (props) => {
                                 {rest.baseWaiters?.map(it =>
                                     <Avatar src={it.avatar}/>
                                 )}
-                            </Avatar.Group>
+                            </AvatarAnt.Group>
                         </Col>
                     </Row>
                 </Col>

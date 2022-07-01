@@ -1,23 +1,26 @@
 import React, {FunctionComponent, useEffect, useState} from "react";
 import SubAdminHeader from "src/components/header/sub-admin"
 import {Button, Form, Input, InputNumber, List, Modal, Result, Spin, Tabs, Typography} from "antd"
-import {PlusOutlined, EditOutlined} from "@ant-design/icons"
-import {capitalize, percents, randomAdjective, randomEmail, randomPassword, withTimeout} from "src/utils"
+import {EditOutlined, PlusOutlined} from "@ant-design/icons"
+import {capitalize, percents, randomAdjective, randomEmail, randomPassword} from "src/utils"
 import {RestService} from "src/services/RestService"
 import Config from "src/config"
 import {useDispatch, useSelector} from "src/redu/store"
 import {
-    addAllRest, addManagerRest,
-    addRest, deleteManagerRest,
+    addAllRest,
+    addManagerRest,
+    addRest,
+    deleteManagerRest,
     deleteRest,
     modifyAddressRest,
     modifyBasicRest,
     modifyFinanceRest,
-    modifyLegalRest, updManagerRest, updRest
+    modifyLegalRest,
+    updManagerRest,
+    updRest
 } from "src/redu/actions/rest"
 import RestCard from "src/components/card/RestCard"
 import {Restaurant} from "src/models/application/restaurants"
-import PasswordInput from "src/components/input/password"
 import notification from "src/utils/notification"
 import AsyncButton from "src/components/buttons/AsyncButton"
 

@@ -85,12 +85,13 @@ export function MainRoutes() {
                 {
                     path: "*",
                     element: (
-                        <div>
-                            <PrivateRoute element={NoMatch} meta={{
-                                requiresAuth: false,
-                                title: "404 Not Found"
-                            }}/>
-                        </div>
+                        <Navigate to="/admin" replace/>
+                        // <div>
+                        //     <PrivateRoute element={NoMatch} meta={{
+                        //         requiresAuth: false,
+                        //         title: "404 Not Found"
+                        //     }}/>
+                        // </div>
                     )
                 }
             ]
