@@ -14,7 +14,7 @@ export default {
     baseURL: "/",
     domainURL: IS_DEV ? "http://localhost:8080/" : null,
 
-    title: "react-webpack-typescript-starter",
+    title: "react-vite-typescript-starter",
     http: {
         testModeToken: VITE_API_HTTP_TEST_TOKEN,
         apiURL: VITE_API_HTTP_BASE,

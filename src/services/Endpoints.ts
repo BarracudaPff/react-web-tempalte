@@ -7,9 +7,6 @@ export function url(url: string): string {
 }
 
 export const API = {
-    // requests
-    // ListReviews: url("/goods/reviews/list"),
-
     // json placeholder
     ListUsers: url("/users"),
     GetUser: (id: string) => url(`/users/${id}`),

@@ -3,6 +3,8 @@ import {createAction} from "typesafe-actions"
 import {UserInfo} from "src/models/application"
 
 export const loadUsers = createAction(ReduxType.LOAD_USERS)<UserInfo[]>()
-
 export const addUser = createAction(ReduxType.ADD_USER)<UserInfo>()
+
+export const logIn = createAction(ReduxType.LOG_IN)()
+export const logOut = createAction(ReduxType.LOG_OUT)()
 

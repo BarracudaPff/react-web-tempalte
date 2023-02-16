@@ -10,8 +10,6 @@ import {TypedUseSelectorHook, useDispatch as useDispatchRedux, useSelector as us
  */
 const rootReducer = combineReducers<AppState>({
     user: user,
-    // goods: goods,
-    // user: user
 });
 
 // const actionTypeEnumToString = (action: any): any => typeof action.type === "number" && ReduxType[action.type]
@@ -25,8 +23,7 @@ const store = createStore(rootReducer,
 
 
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-// export type AppDispatch = typeof store.dispatch
+
 export type AppDispatch = UserActionType
 
 

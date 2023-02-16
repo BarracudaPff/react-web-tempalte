@@ -19,12 +19,6 @@ export function MainRoutes() {
         </Suspense>
     )
 
-    const withIndex = (index: ReactNode, other: RouteObject[]): RouteObject[] => [
-        { path: "index", element: sus(index) },
-        { path: "", element: sus(index) },
-        ...other
-    ]
-
     return useRoutes([
         {
             path: "/",
