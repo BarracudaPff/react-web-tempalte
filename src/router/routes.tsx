@@ -1,8 +1,9 @@
 import React, {ReactNode, Suspense} from "react"
-import {RouteObject, useRoutes} from "react-router-dom"
-import PrivateRoute from "src/components/private-route";
-import NoMatch from "src/components/exception";
-import LoginView from "src/views/login";
+import {useRoutes} from "react-router-dom"
+import PrivateRoute from "src/components/private-route"
+import NoMatch from "src/components/exception"
+import LoginView from "src/views/login"
+import {LoadingOutlined} from "@ant-design/icons"
 
 // const LandingView = React.lazy(() => import("src/views/landing"))
 
@@ -14,7 +15,7 @@ export function MainRoutes() {
     }} />
 
     const sus = (element: ReactNode) => (
-        <Suspense fallback={"..."}>
+        <Suspense fallback={<LoadingOutlined/>}>
             {element}
         </Suspense>
     )

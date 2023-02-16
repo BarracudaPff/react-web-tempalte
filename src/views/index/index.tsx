@@ -120,7 +120,7 @@ const LandingView: FC = () => {
             <Footer/>
             <Modal
                 title={"Create new user"}
-                visible={addNewUser}
+                open={addNewUser}
                 onOk={form.submit}
                 okButtonProps={{loading: loadingFormReq}}
                 onCancel={handleCancel}>

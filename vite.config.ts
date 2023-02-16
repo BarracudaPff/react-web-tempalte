@@ -31,7 +31,6 @@ export default defineConfig({
         alias: [
             { find: "src", replacement: resolve(__dirname, "src") },
             { find: /^~/, replacement: "" },
-            { find: "react/jsx-runtime", replacement: "react/jsx-runtime.js" },
         ]
     },
 
