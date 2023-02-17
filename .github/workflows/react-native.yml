@@ -1,44 +1,65 @@
-name: React Native CI
+name: Build and test
 
 on:
   push:
-    branches: [ master, '**' ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ master, '**' ]
+    branches: [ "**" ]
+  workflow_call:
 
 jobs:
   build:
+    name: Build and test dev version
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node: [17]
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Node modules cache
-        uses: actions/cache@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-
-      - name: Install yarn
-        run: npm install -g yarn
-
+          node-version: 19
       - name: Install dependencies
-        run: yarn
-
-      - name: Install dependencies
+        run: yarn install
+      - name: Build
         run: yarn run build
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Create Release
+        uses: actions/github-script@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            console.log('environment', process.versions);
 
-      - name: Run React Native tests
-        run: npm run test
+            const fs = require('fs').promises;
+
+            const { repo: { owner, repo }, sha } = context;
+            console.log({ owner, repo, sha });
+
+            const release = await github.repos.createRelease({
+              owner, repo,
+              tag_name: process.env.GITHUB_REF,
+              draft: true,
+              target_commitish: sha
+            });
+
+            console.log('created release', { release });
+
+            for (let file of await fs.readdir('build')) {
+              // do whatever filtering you want here, I'm just uploading all the files
+              console.log('uploading', file);
+
+              await github.repos.uploadReleaseAsset({
+                owner, repo,
+                release_id: release.data.id,
+                name: file,
+                data: await fs.readFile(`./${file}`)
+              });
+            }
+
